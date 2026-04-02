@@ -1,7 +1,38 @@
-import { motion } from 'motion/react';
-import { Phone, MessageCircle, Calendar, ChevronRight, CheckCircle2 } from 'lucide-react';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import { Phone, MessageCircle, Calendar, ChevronRight, CheckCircle2, Loader2, X } from 'lucide-react';
+import { useForm } from 'react-hook-form';
+import { db, handleFirestoreError, OperationType } from '../firebase';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+
+interface HeroLeadFormData {
+  name: string;
+  phone: string;
+}
 
 export default function Hero() {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const { register, handleSubmit, reset, formState: { errors } } = useForm<HeroLeadFormData>();
+
+  const onSubmit = async (data: HeroLeadFormData) => {
+    setIsSubmitting(true);
+    try {
+      await addDoc(collection(db, 'leads'), {
+        ...data,
+        source: 'Hero Form',
+        createdAt: serverTimestamp(),
+      });
+      setIsSubmitted(true);
+      reset();
+      setTimeout(() => setIsSubmitted(false), 5000);
+    } catch (error) {
+      handleFirestoreError(error, OperationType.CREATE, 'leads');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   const handleWhatsApp = () => {
     window.open(`https://wa.me/919999882898`, '_blank');
   };
@@ -18,17 +49,17 @@ export default function Hero() {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center pt-20 overflow-hidden">
+    <section className="relative min-h-screen flex items-center pt-24 pb-16 overflow-hidden">
       {/* Background Image with Premium Night Skyline */}
       <div className="absolute inset-0 z-0">
         <img
-          src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?q=80&w=2070&auto=format&fit=crop"
+          src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop"
           alt="Premium commercial building at night"
           className="w-full h-full object-cover"
           referrerPolicy="no-referrer"
         />
-        {/* Dark Gradient Overlay for Luxury Feel and Readability */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black via-black/60 to-transparent z-10" />
+        {/* Dramatic Left-to-Right Dark Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-black/20 z-10" />
       </div>
 
       <div className="container mx-auto px-4 relative z-20">
@@ -37,9 +68,9 @@ export default function Hero() {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="flex justify-center mb-12"
+          className="flex justify-center mb-16"
         >
-          <div className="bg-white/90 p-4 rounded-2xl shadow-2xl backdrop-blur-sm">
+          <div className="bg-white/95 p-4 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.3)] backdrop-blur-md border border-white/20">
             <img 
               src="https://instasize.com/api/image/87e2fdb8828fd9cdfa4566774e9ba73c587ea743872310c777de048c2b9dd4b1.jpeg" 
               alt="REAL PROP Logo" 
@@ -49,89 +80,176 @@ export default function Hero() {
           </div>
         </motion.div>
 
-        <div className="max-w-4xl">
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1, ease: "easeOut" }}
-            className="space-y-8"
-          >
-            {/* Headline */}
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white leading-[1.1] tracking-tight">
-              Commercial Property <br />
-              <span className="text-red-600">Investment</span> <br />
-              <span className="text-white/90">in Delhi NCR</span>
-            </h1>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
+          {/* Left Content: Dominant Headline & CTAs */}
+          <div className="lg:col-span-7">
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 1, ease: "easeOut" }}
+              className="space-y-10"
+            >
+              <div className="space-y-6">
+                <h1 className="text-6xl md:text-8xl lg:text-9xl font-black text-white leading-[0.9] tracking-tighter">
+                  COMMERCIAL <br />
+                  <span className="text-red-600 drop-shadow-[0_0_20px_rgba(220,38,38,0.6)]">INVESTMENT</span> <br />
+                  <span className="text-white/90">DELHI NCR</span>
+                </h1>
+                <p className="text-xl md:text-3xl text-gray-300 font-bold tracking-wide border-l-8 border-red-600 pl-8">
+                  Retail Shops | Office Space | Studio Units | Residential Flats
+                </p>
+              </div>
 
-            {/* Subheadline */}
-            <p className="text-xl md:text-2xl text-gray-300 font-medium tracking-wide">
-              Retail Shops | Office Space | Studio Units | Residential Flats
-            </p>
+              {/* Highlight Points */}
+              <div className="flex flex-wrap gap-x-10 gap-y-6 pt-4">
+                {[
+                  "High Rental Income",
+                  "Prime Locations",
+                  "Verified Projects"
+                ].map((point, index) => (
+                  <motion.div
+                    key={point}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5 + index * 0.1 }}
+                    className="flex items-center space-x-3 text-white/95"
+                  >
+                    <CheckCircle2 size={28} className="text-red-600" />
+                    <span className="font-extrabold tracking-wide text-xl">{point}</span>
+                  </motion.div>
+                ))}
+              </div>
 
-            {/* Highlight Points */}
-            <div className="flex flex-col sm:flex-row gap-6 pt-4">
-              {[
-                "High Rental Income",
-                "Prime Locations",
-                "Verified Projects"
-              ].map((point, index) => (
-                <motion.div
-                  key={point}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5 + index * 0.1 }}
-                  className="flex items-center space-x-2 text-white/90"
+              {/* CTA Buttons */}
+              <div className="flex flex-wrap gap-8 pt-10">
+                <motion.button
+                  whileHover={{ scale: 1.05, backgroundColor: '#dc2626', boxShadow: '0 0 40px rgba(220,38,38,0.7)' }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={scrollToLeadForm}
+                  className="bg-red-600 text-white px-14 py-7 rounded-2xl font-black text-2xl transition-all shadow-[0_25px_50px_rgba(220,38,38,0.5)] flex items-center space-x-4 group"
                 >
-                  <CheckCircle2 size={20} className="text-red-600" />
-                  <span className="font-semibold tracking-wide">{point}</span>
-                </motion.div>
-              ))}
-            </div>
+                  <span>GET DETAILS</span>
+                  <ChevronRight size={28} className="group-hover:translate-x-2 transition-transform" />
+                </motion.button>
+                
+                <div className="flex flex-wrap gap-5">
+                  <motion.button
+                    whileHover={{ scale: 1.05, backgroundColor: 'rgba(255,255,255,0.15)' }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={handleCall}
+                    className="bg-white/10 text-white backdrop-blur-md border border-white/20 px-10 py-7 rounded-2xl font-black text-xl transition-all flex items-center space-x-3"
+                  >
+                    <Calendar size={24} />
+                    <span>Book Visit</span>
+                  </motion.button>
 
-            {/* CTA Buttons */}
-            <div className="flex flex-wrap gap-5 pt-8">
-              <motion.button
-                whileHover={{ scale: 1.05, backgroundColor: '#dc2626' }}
-                whileTap={{ scale: 0.95 }}
-                onClick={scrollToLeadForm}
-                className="bg-red-600 text-white px-10 py-5 rounded-xl font-bold text-lg transition-all shadow-2xl shadow-red-600/40 flex items-center space-x-3"
-              >
-                <span>Get Details</span>
-                <ChevronRight size={22} />
-              </motion.button>
+                  <motion.button
+                    whileHover={{ scale: 1.05, backgroundColor: '#16a34a', boxShadow: '0 0 40px rgba(22,163,74,0.5)' }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={handleWhatsApp}
+                    className="bg-green-600 text-white px-10 py-7 rounded-2xl font-black text-xl transition-all shadow-2xl shadow-green-600/40 flex items-center space-x-3"
+                  >
+                    <MessageCircle size={24} />
+                    <span>WhatsApp</span>
+                  </motion.button>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Right Content: Stand-out Lead Form */}
+          <div className="lg:col-span-5">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, x: 50 }}
+              animate={{ opacity: 1, scale: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              className="bg-white p-12 rounded-[3rem] shadow-[0_40px_120px_rgba(0,0,0,0.6)] border border-gray-100 relative overflow-hidden"
+            >
+              <div className="absolute top-0 left-0 w-full h-4 bg-red-600" />
               
-              <motion.button
-                whileHover={{ scale: 1.05, backgroundColor: 'rgba(255,255,255,0.15)' }}
-                whileTap={{ scale: 0.95 }}
-                onClick={handleCall}
-                className="bg-white/10 text-white backdrop-blur-md border border-white/20 px-10 py-5 rounded-xl font-bold text-lg transition-all flex items-center space-x-3"
-              >
-                <Calendar size={22} />
-                <span>Book Site Visit</span>
-              </motion.button>
+              <div className="mb-10">
+                <h3 className="text-4xl font-black text-gray-900 mb-3 tracking-tight">Get Project Details</h3>
+                <p className="text-gray-500 font-bold text-lg">Receive exclusive pricing and floor plans instantly.</p>
+              </div>
 
-              <motion.button
-                whileHover={{ scale: 1.05, backgroundColor: '#16a34a' }}
-                whileTap={{ scale: 0.95 }}
-                onClick={handleWhatsApp}
-                className="bg-green-600 text-white px-10 py-5 rounded-xl font-bold text-lg transition-all shadow-2xl shadow-green-600/40 flex items-center space-x-3"
-              >
-                <MessageCircle size={22} />
-                <span>WhatsApp Now</span>
-              </motion.button>
-            </div>
-          </motion.div>
+              <AnimatePresence mode="wait">
+                {isSubmitted ? (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.9 }}
+                    className="py-20 flex flex-col items-center text-center"
+                  >
+                    <div className="w-24 h-24 bg-green-100 text-green-600 rounded-full flex items-center justify-center mb-8">
+                      <CheckCircle2 size={48} />
+                    </div>
+                    <h4 className="text-3xl font-black text-gray-900 mb-3">Request Sent!</h4>
+                    <p className="text-gray-600 text-lg font-medium">Our expert will contact you shortly.</p>
+                  </motion.div>
+                ) : (
+                  <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+                    <div className="space-y-3">
+                      <label className="text-xs font-black text-gray-400 uppercase tracking-[0.3em]">Full Name</label>
+                      <input
+                        {...register('name', { required: 'Name is required' })}
+                        placeholder="Enter your name"
+                        className="w-full px-8 py-5 rounded-2xl border-4 border-gray-50 focus:border-red-500 focus:ring-0 outline-none transition-all text-xl font-bold placeholder:text-gray-300"
+                      />
+                      {errors.name && <p className="text-sm text-red-500 font-black mt-2">{errors.name.message}</p>}
+                    </div>
+
+                    <div className="space-y-3">
+                      <label className="text-xs font-black text-gray-400 uppercase tracking-[0.3em]">Phone Number</label>
+                      <input
+                        {...register('phone', { required: 'Phone is required' })}
+                        placeholder="Enter your phone"
+                        className="w-full px-8 py-5 rounded-2xl border-4 border-gray-50 focus:border-red-500 focus:ring-0 outline-none transition-all text-xl font-bold placeholder:text-gray-300"
+                      />
+                      {errors.phone && <p className="text-sm text-red-500 font-black mt-2">{errors.phone.message}</p>}
+                    </div>
+
+                    <motion.button
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      disabled={isSubmitting}
+                      className="w-full bg-red-600 hover:bg-red-700 text-white font-black py-6 rounded-2xl shadow-[0_20px_40px_rgba(220,38,38,0.3)] flex items-center justify-center space-x-4 disabled:opacity-70 transition-all mt-6 text-xl"
+                    >
+                      {isSubmitting ? (
+                        <Loader2 className="animate-spin" size={28} />
+                      ) : (
+                        <>
+                          <span>GET DETAILS NOW</span>
+                          <ChevronRight size={28} />
+                        </>
+                      )}
+                    </motion.button>
+                  </form>
+                )}
+              </AnimatePresence>
+
+              <div className="mt-12 pt-10 border-t border-gray-100 flex items-center justify-center space-x-10 text-gray-400">
+                <div className="flex items-center space-x-3">
+                  <CheckCircle2 size={20} className="text-green-500" />
+                  <span className="text-[12px] font-black uppercase tracking-[0.2em]">Verified</span>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <CheckCircle2 size={20} className="text-green-500" />
+                  <span className="text-[12px] font-black uppercase tracking-[0.2em]">Secure</span>
+                </div>
+              </div>
+            </motion.div>
+          </div>
         </div>
       </div>
 
       {/* Scroll Indicator */}
       <motion.div
-        animate={{ y: [0, 12, 0] }}
+        animate={{ y: [0, 15, 0] }}
         transition={{ repeat: Infinity, duration: 2.5 }}
         className="absolute bottom-10 left-1/2 -translate-x-1/2 text-white/30 hidden md:block z-20"
       >
-        <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center p-1.5">
-          <div className="w-1 h-2 bg-white/30 rounded-full" />
+        <div className="w-8 h-12 border-4 border-white/20 rounded-full flex justify-center p-2">
+          <div className="w-1.5 h-3 bg-white/30 rounded-full" />
         </div>
       </motion.div>
     </section>
