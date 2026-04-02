@@ -104,12 +104,17 @@ export default function ProjectsSection({ title }: { title?: string }) {
                   </p>
                   <button 
                     onClick={() => {
-                      const contactSection = document.getElementById('contact');
-                      if (contactSection) contactSection.scrollIntoView({ behavior: 'smooth' });
+                      const heroForm = document.getElementById('lead-form-hero');
+                      if (heroForm) {
+                        heroForm.scrollIntoView({ behavior: 'smooth' });
+                      } else {
+                        const contactSection = document.getElementById('contact');
+                        if (contactSection) contactSection.scrollIntoView({ behavior: 'smooth' });
+                      }
                     }}
                     className="w-full flex items-center justify-center space-x-2 bg-gray-900 hover:bg-red-600 text-white py-3 rounded-xl font-bold transition-all group-hover:shadow-lg group-hover:shadow-red-600/20"
                   >
-                    <span>Enquire Now</span>
+                    <span>Get Details</span>
                     <ChevronRight size={18} />
                   </button>
                 </div>

@@ -52,10 +52,11 @@ export default function FloatingButtons() {
         whileHover={{ scale: 1.1, x: -5 }}
         whileTap={{ scale: 0.9 }}
         onClick={handleWhatsApp}
-        className="w-14 h-14 bg-green-500 text-white rounded-full flex items-center justify-center shadow-2xl shadow-green-500/40 hover:bg-green-600 transition-all group relative"
+        className="w-16 h-16 bg-green-500 text-white rounded-full flex items-center justify-center shadow-2xl shadow-green-500/40 hover:bg-green-600 transition-all group relative"
       >
-        <MessageCircle size={28} />
-        <span className="absolute right-16 bg-white text-green-600 px-4 py-2 rounded-lg text-sm font-bold shadow-xl opacity-0 group-hover:opacity-100 transition-all whitespace-nowrap pointer-events-none">
+        <span className="absolute inset-0 rounded-full bg-green-500 animate-ping opacity-20" />
+        <MessageCircle size={32} className="relative z-10" />
+        <span className="absolute right-20 bg-white text-green-600 px-4 py-2 rounded-lg text-sm font-bold shadow-xl opacity-0 group-hover:opacity-100 transition-all whitespace-nowrap pointer-events-none">
           Chat on WhatsApp
         </span>
       </motion.button>

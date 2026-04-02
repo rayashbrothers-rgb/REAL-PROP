@@ -39,11 +39,11 @@ export default function LeadForm({ noContainer = false }: { noContainer?: boolea
     <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-2xl overflow-hidden flex flex-col md:flex-row border border-gray-100">
       {/* Left Side: Info */}
       <div className="md:w-1/3 bg-red-600 p-8 text-white flex flex-col justify-center">
-        <h2 className="text-3xl font-bold mb-6">Find Your Perfect Property</h2>
-        <p className="text-red-100 mb-8">Fill the form to get exclusive details instantly.</p>
+        <h2 className="text-3xl font-bold mb-6">Invest in the Best Commercial Projects</h2>
+        <p className="text-red-100 mb-8">Get exclusive access to pre-leased shops and premium office spaces.</p>
         
         <ul className="space-y-4">
-          {['Price List', 'Payment Plan', 'Best Investment Offers'].map((item) => (
+          {['Instant Price List', 'Flexible Payment Plans', 'High ROI Projects'].map((item) => (
             <li key={item} className="flex items-center space-x-3">
               <CheckCircle2 className="text-white shrink-0" size={20} />
               <span className="font-medium">{item}</span>

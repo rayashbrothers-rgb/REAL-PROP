@@ -10,12 +10,16 @@ export default function CTASection() {
     window.location.href = 'tel:9999882898';
   };
 
+  const scrollToLeadForm = () => {
+    document.getElementById('lead-form-hero')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
-    <section className="py-20 bg-red-600 relative overflow-hidden">
+    <section className="py-20 bg-gray-900 relative overflow-hidden">
       {/* Decorative Background */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-0 left-0 w-96 h-96 bg-white rounded-full -translate-x-1/2 -translate-y-1/2 blur-3xl" />
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full translate-x-1/2 translate-y-1/2 blur-3xl" />
+      <div className="absolute inset-0 opacity-20">
+        <div className="absolute top-0 left-0 w-96 h-96 bg-red-600 rounded-full -translate-x-1/2 -translate-y-1/2 blur-3xl" />
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-red-600 rounded-full translate-x-1/2 translate-y-1/2 blur-3xl" />
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
@@ -26,16 +30,16 @@ export default function CTASection() {
             viewport={{ once: true }}
             className="text-4xl md:text-5xl font-bold text-white mb-8 leading-tight"
           >
-            Ready to Invest in the Best Commercial Property in Delhi NCR?
+            Looking to Invest in <span className="text-red-500">High-Return</span> Commercial Property?
           </motion.h2>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-xl text-red-100 mb-12"
+            className="text-xl text-gray-400 mb-12"
           >
-            Get expert guidance from REAL PROP, your trusted real estate consultant. Call or WhatsApp us today for exclusive deals on office spaces and retail shops.
+            Get exclusive access to the best retail shops and office spaces in Delhi NCR. Our experts are ready to help you find the perfect investment.
           </motion.p>
 
           <motion.div 
@@ -46,15 +50,22 @@ export default function CTASection() {
             className="flex flex-col sm:flex-row justify-center gap-6"
           >
             <button 
+              onClick={scrollToLeadForm}
+              className="bg-red-600 text-white hover:bg-red-700 px-10 py-5 rounded-2xl font-bold text-lg flex items-center justify-center space-x-3 transition-all shadow-xl shadow-red-600/20"
+            >
+              <ArrowRight size={24} />
+              <span>Get Details</span>
+            </button>
+            <button 
               onClick={handleCall}
-              className="bg-white text-red-600 hover:bg-gray-100 px-10 py-5 rounded-2xl font-bold text-lg flex items-center justify-center space-x-3 transition-all shadow-xl shadow-red-900/20"
+              className="bg-white text-gray-900 hover:bg-gray-100 px-10 py-5 rounded-2xl font-bold text-lg flex items-center justify-center space-x-3 transition-all shadow-xl shadow-white/10"
             >
               <Phone size={24} />
-              <span>Call +91 99998 82898</span>
+              <span>Book Site Visit</span>
             </button>
             <button 
               onClick={handleWhatsApp}
-              className="bg-green-500 text-white hover:bg-green-600 px-10 py-5 rounded-2xl font-bold text-lg flex items-center justify-center space-x-3 transition-all shadow-xl shadow-green-900/20"
+              className="bg-green-600 text-white hover:bg-green-700 px-10 py-5 rounded-2xl font-bold text-lg flex items-center justify-center space-x-3 transition-all shadow-xl shadow-green-600/20"
             >
               <MessageCircle size={24} />
               <span>WhatsApp Now</span>

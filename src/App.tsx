@@ -41,13 +41,13 @@ function HomePage() {
   return (
     <div className="bg-white">
       <Hero />
+      <InvestorBuyerSections />
       <div id="lead-form" className="py-16 bg-gray-50">
         <LeadForm />
       </div>
       <div id="projects" className="py-16">
         <ProjectsSection />
       </div>
-      <InvestorBuyerSections />
       <div id="youtube" className="py-16 bg-gray-50">
         <YouTubeSection />
       </div>

@@ -4,14 +4,14 @@ import { TrendingUp, Building, Briefcase, Wallet, ShieldCheck, BarChart3 } from 
 export default function InvestorBuyerSections() {
   return (
     <div className="space-y-24 py-20">
-      {/* Investor-Focused Section */}
+      {/* Investment Opportunities Section */}
       <section className="container mx-auto px-4">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-4xl font-bold text-gray-900 mb-6">
-            Commercial Property <span className="text-red-600">Investment</span> Delhi NCR
+            Investment <span className="text-red-600">Opportunities</span>
           </h2>
           <p className="text-gray-600 text-lg">
-            Maximize your ROI with high rental yield properties. Our property investment consultants identify the best opportunities for long-term wealth creation.
+            Strategic commercial property investment options in Delhi NCR designed for maximum returns and security.
           </p>
         </div>
 
@@ -19,19 +19,19 @@ export default function InvestorBuyerSections() {
           {[
             {
               title: "High Rental Yield",
-              desc: "Invest in pre-leased commercial properties with guaranteed monthly rentals and high appreciation potential.",
+              desc: "Earn consistent monthly rental income with pre-leased commercial properties in prime business hubs.",
               icon: TrendingUp,
               color: "bg-red-50 text-red-600"
             },
             {
-              title: "Best Investment Deals",
-              desc: "Exclusive access to off-market commercial property investment opportunities in prime locations of Noida & Delhi NCR.",
+              title: "Early Stage Projects",
+              desc: "Invest early in upcoming commercial developments for maximum capital appreciation and better entry prices.",
               icon: Wallet,
               color: "bg-blue-50 text-blue-600"
             },
             {
-              title: "Strategic Consulting",
-              desc: "Data-driven insights from the leading property investment consultant in Delhi NCR to guide your portfolio growth.",
+              title: "Growth Locations",
+              desc: "Prime areas with high future demand and infrastructure development in Noida, Greater Noida & Delhi NCR.",
               icon: BarChart3,
               color: "bg-green-50 text-green-600"
             }
@@ -39,10 +39,10 @@ export default function InvestorBuyerSections() {
             <motion.div
               key={i}
               whileHover={{ y: -10 }}
-              className="p-8 bg-white rounded-3xl border border-gray-100 shadow-xl shadow-gray-200/50"
+              className="p-8 bg-white rounded-3xl border border-gray-100 shadow-xl shadow-gray-200/50 text-center"
             >
-              <div className={`w-14 h-14 ${item.color} rounded-2xl flex items-center justify-center mb-6`}>
-                <item.icon size={28} />
+              <div className={`w-16 h-16 ${item.color} rounded-2xl flex items-center justify-center mb-6 mx-auto`}>
+                <item.icon size={32} />
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-4">{item.title}</h3>
               <p className="text-gray-600 leading-relaxed">{item.desc}</p>
