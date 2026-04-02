@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Routes, Route, Link, useNavigate, useLocation } from 'react-router-dom';
 import { User } from 'firebase/auth';
 import { db, auth, signInWithGoogle, logout, handleFirestoreError, OperationType } from '../firebase';
@@ -8,6 +8,10 @@ import { useForm, useWatch } from 'react-hook-form';
 import { motion, AnimatePresence } from 'motion/react';
 import { LayoutDashboard, Plus, Trash2, Edit, LogOut, ChevronRight, Loader2, Building, Users, CheckCircle2, X, Image as ImageIcon, MapPin, Tag, FileText, Database, Copy, Check, Lock, LogIn } from 'lucide-react';
 import { getDirectImageUrl } from '../lib/imageUtils';
+
+function cn(...classes: (string | boolean | undefined)[]) {
+  return classes.filter(Boolean).join(' ');
+}
 
 const SEED_PROJECTS: Partial<Project>[] = [
   {
@@ -137,67 +141,120 @@ export default function AdminDashboard({ user, isAdmin, onLogin, onLogout }: { u
   }
 
   return (
-    <div className="container mx-auto px-4 py-12">
-      <div className="flex flex-col lg:flex-row gap-12">
-        {/* Sidebar */}
-        <aside className="lg:w-1/4 space-y-4">
-          <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100">
-            <div className="flex items-center space-x-4 mb-8">
-              <div className="w-12 h-12 rounded-full bg-red-600 flex items-center justify-center text-white font-bold text-xl">
-                L
-              </div>
-              <div>
-                <h4 className="font-bold text-gray-900 text-sm">LALIT KUMAR</h4>
-                <p className="text-xs text-gray-500">Administrator</p>
-              </div>
+    <div className="min-h-screen bg-gray-50">
+      {/* Mobile Header */}
+      <div className="lg:hidden bg-white border-b border-gray-100 px-4 py-4 sticky top-16 z-40">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-3">
+            <div className="w-10 h-10 rounded-full bg-red-600 flex items-center justify-center text-white font-bold">
+              L
             </div>
-
-            <nav className="space-y-2">
-              <Link to="/admin" className="flex items-center space-x-3 p-3 rounded-xl hover:bg-red-50 text-gray-700 hover:text-red-600 transition-all font-medium">
-                <LayoutDashboard size={20} />
-                <span>Dashboard</span>
-              </Link>
-              <Link to="/admin/projects" className="flex items-center space-x-3 p-3 rounded-xl hover:bg-red-50 text-gray-700 hover:text-red-600 transition-all font-medium">
-                <Building size={20} />
-                <span>Projects</span>
-              </Link>
-              <Link to="/admin/leads" className="flex items-center space-x-3 p-3 rounded-xl hover:bg-red-50 text-gray-700 hover:text-red-600 transition-all font-medium">
-                <Users size={20} />
-                <span>Leads</span>
-              </Link>
-              <button
-                onClick={onLogout}
-                className="w-full flex items-center space-x-3 p-3 rounded-xl hover:bg-gray-100 text-gray-700 transition-all font-medium mt-8"
-              >
-                <LogOut size={20} />
-                <span>Logout</span>
-              </button>
-            </nav>
+            <div>
+              <h4 className="font-bold text-gray-900 text-sm">LALIT KUMAR</h4>
+              <p className="text-[10px] text-gray-500 uppercase tracking-widest">Admin</p>
+            </div>
           </div>
-        </aside>
+          <button onClick={onLogout} className="p-2 text-gray-400 hover:text-red-600">
+            <LogOut size={20} />
+          </button>
+        </div>
+        
+        <nav className="flex space-x-2 mt-4 overflow-x-auto pb-2 scrollbar-hide">
+          <Link to="/admin" className={cn(
+            "flex items-center space-x-2 px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap transition-all",
+            location.pathname === '/admin' ? "bg-red-600 text-white shadow-lg shadow-red-200" : "bg-gray-100 text-gray-600"
+          )}>
+            <LayoutDashboard size={14} />
+            <span>Dashboard</span>
+          </Link>
+          <Link to="/admin/projects" className={cn(
+            "flex items-center space-x-2 px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap transition-all",
+            location.pathname === '/admin/projects' ? "bg-red-600 text-white shadow-lg shadow-red-200" : "bg-gray-100 text-gray-600"
+          )}>
+            <Building size={14} />
+            <span>Projects</span>
+          </Link>
+          <Link to="/admin/leads" className={cn(
+            "flex items-center space-x-2 px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap transition-all",
+            location.pathname === '/admin/leads' ? "bg-red-600 text-white shadow-lg shadow-red-200" : "bg-gray-100 text-gray-600"
+          )}>
+            <Users size={14} />
+            <span>Leads</span>
+          </Link>
+        </nav>
+      </div>
 
-        {/* Main Content */}
-        <main className="lg:w-3/4">
-          <AnimatePresence mode="wait">
-            <Routes location={location}>
-              <Route path="/" element={
-                <motion.div key="dashboard" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
-                  <DashboardStats />
-                </motion.div>
-              } />
-              <Route path="/projects" element={
-                <motion.div key="projects" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
-                  <ProjectManagement />
-                </motion.div>
-              } />
-              <Route path="/leads" element={
-                <motion.div key="leads" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
-                  <LeadManagement />
-                </motion.div>
-              } />
-            </Routes>
-          </AnimatePresence>
-        </main>
+      <div className="container mx-auto px-4 py-8 lg:py-12">
+        <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
+          {/* Desktop Sidebar */}
+          <aside className="hidden lg:block lg:w-1/4 space-y-4">
+            <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 sticky top-28">
+              <div className="flex items-center space-x-4 mb-8">
+                <div className="w-12 h-12 rounded-full bg-red-600 flex items-center justify-center text-white font-bold text-xl">
+                  L
+                </div>
+                <div>
+                  <h4 className="font-bold text-gray-900 text-sm">LALIT KUMAR</h4>
+                  <p className="text-xs text-gray-500">Administrator</p>
+                </div>
+              </div>
+
+              <nav className="space-y-2">
+                <Link to="/admin" className={cn(
+                  "flex items-center space-x-3 p-3 rounded-xl transition-all font-bold",
+                  location.pathname === '/admin' ? "bg-red-50 text-red-600" : "text-gray-600 hover:bg-gray-50"
+                )}>
+                  <LayoutDashboard size={20} />
+                  <span>Dashboard</span>
+                </Link>
+                <Link to="/admin/projects" className={cn(
+                  "flex items-center space-x-3 p-3 rounded-xl transition-all font-bold",
+                  location.pathname === '/admin/projects' ? "bg-red-50 text-red-600" : "text-gray-600 hover:bg-gray-50"
+                )}>
+                  <Building size={20} />
+                  <span>Projects</span>
+                </Link>
+                <Link to="/admin/leads" className={cn(
+                  "flex items-center space-x-3 p-3 rounded-xl transition-all font-bold",
+                  location.pathname === '/admin/leads' ? "bg-red-50 text-red-600" : "text-gray-600 hover:bg-gray-50"
+                )}>
+                  <Users size={20} />
+                  <span>Leads</span>
+                </Link>
+                <button
+                  onClick={onLogout}
+                  className="w-full flex items-center space-x-3 p-3 rounded-xl hover:bg-gray-100 text-gray-700 transition-all font-medium mt-8"
+                >
+                  <LogOut size={20} />
+                  <span>Logout</span>
+                </button>
+              </nav>
+            </div>
+          </aside>
+
+          {/* Main Content */}
+          <main className="lg:w-3/4">
+            <AnimatePresence mode="wait">
+              <Routes location={location}>
+                <Route path="/" element={
+                  <motion.div key="dashboard" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}>
+                    <DashboardStats />
+                  </motion.div>
+                } />
+                <Route path="/projects" element={
+                  <motion.div key="projects" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}>
+                    <ProjectManagement />
+                  </motion.div>
+                } />
+                <Route path="/leads" element={
+                  <motion.div key="leads" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}>
+                    <LeadManagement />
+                  </motion.div>
+                } />
+              </Routes>
+            </AnimatePresence>
+          </main>
+        </div>
       </div>
     </div>
   );
@@ -324,11 +381,11 @@ function ProjectManagement() {
 
   return (
     <div className="space-y-8">
-      <div className="flex justify-between items-center">
-        <h2 className="text-3xl font-bold text-gray-900">Project Management</h2>
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <h2 className="text-2xl lg:text-3xl font-bold text-gray-900">Project Management</h2>
         <button
           onClick={() => setIsAdding(true)}
-          className="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-xl font-bold flex items-center space-x-2 shadow-lg shadow-red-600/20"
+          className="w-full sm:w-auto bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-xl font-bold flex items-center justify-center space-x-2 shadow-lg shadow-red-600/20"
         >
           <Plus size={20} />
           <span>Add Project</span>
@@ -347,7 +404,29 @@ function ProjectManagement() {
         )}
       </AnimatePresence>
 
-      <div className="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden">
+      <div className="grid grid-cols-1 gap-4 lg:hidden">
+        {projects.map((project) => (
+          <div key={project.id} className="bg-white p-4 rounded-2xl shadow-md border border-gray-100 flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <img src={getDirectImageUrl(project.image)} className="w-12 h-12 rounded-lg object-cover" alt="" referrerPolicy="no-referrer" />
+              <div>
+                <p className="font-bold text-gray-900 text-sm">{project.title}</p>
+                <p className="text-[10px] text-gray-500">{project.location}</p>
+              </div>
+            </div>
+            <div className="flex space-x-2">
+              <button onClick={() => setEditingProject(project)} className="p-2 text-gray-400 hover:text-blue-600">
+                <Edit size={16} />
+              </button>
+              <button onClick={() => handleDelete(project.id)} className="p-2 text-gray-400 hover:text-red-600">
+                <Trash2 size={16} />
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="hidden lg:block bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden">
         <table className="w-full text-left">
           <thead className="bg-gray-50 border-b border-gray-100">
             <tr>
@@ -597,9 +676,39 @@ function LeadManagement() {
 
   return (
     <div className="space-y-8">
-      <h2 className="text-3xl font-bold text-gray-900">Lead Management</h2>
+      <h2 className="text-2xl lg:text-3xl font-bold text-gray-900">Lead Management</h2>
 
-      <div className="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden">
+      <div className="grid grid-cols-1 gap-4 lg:hidden">
+        {leads.map((lead) => (
+          <div key={lead.id} className="bg-white p-4 rounded-2xl shadow-md border border-gray-100 space-y-4">
+            <div className="flex justify-between items-start">
+              <div>
+                <p className="font-bold text-gray-900">{lead.name}</p>
+                <div className="flex items-center space-x-2">
+                  <p className="text-xs text-red-600 font-medium">{lead.phone}</p>
+                  <button onClick={() => copyToClipboard(lead.phone, lead.id)} className="text-gray-400">
+                    {copiedId === lead.id ? <Check size={12} className="text-green-500" /> : <Copy size={12} />}
+                  </button>
+                </div>
+              </div>
+              <button onClick={() => handleDeleteLead(lead.id)} className="text-gray-300 hover:text-red-600">
+                <Trash2 size={16} />
+              </button>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-red-50 text-red-600 uppercase">
+                {lead.propertyType || 'General'}
+              </span>
+              {lead.budget && <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-gray-100 text-gray-500 uppercase">
+                {lead.budget}
+              </span>}
+            </div>
+            <p className="text-[10px] text-gray-400">Received: {lead.createdAt?.toDate().toLocaleDateString()}</p>
+          </div>
+        ))}
+      </div>
+
+      <div className="hidden lg:block bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden">
         <table className="w-full text-left">
           <thead className="bg-gray-50 border-b border-gray-100">
             <tr>
