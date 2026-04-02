@@ -1,0 +1,131 @@
+import { useState, useEffect } from 'react';
+import { db, handleFirestoreError, OperationType } from '../firebase';
+import { collection, query, orderBy, onSnapshot } from 'firebase/firestore';
+import { Project } from '../types';
+import { motion, AnimatePresence } from 'motion/react';
+import { MapPin, Building, Home, TrendingUp, LandPlot, ChevronRight, Loader2 } from 'lucide-react';
+import { getDirectImageUrl } from '../lib/imageUtils';
+
+const CATEGORIES = [
+  { id: 'All', icon: Building },
+  { id: 'Residential', icon: Home },
+  { id: 'Commercial', icon: Building },
+  { id: 'Investment', icon: TrendingUp },
+  { id: 'Plots', icon: LandPlot },
+];
+
+export default function ProjectsSection({ title }: { title?: string }) {
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [activeCategory, setActiveCategory] = useState('All');
+
+  useEffect(() => {
+    const q = query(collection(db, 'projects'), orderBy('createdAt', 'desc'));
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Project));
+      setProjects(data);
+      setLoading(false);
+    }, (error) => {
+      handleFirestoreError(error, OperationType.LIST, 'projects');
+    });
+    return () => unsubscribe();
+  }, []);
+
+  const filteredProjects = activeCategory === 'All' 
+    ? projects 
+    : projects.filter(p => p.category === activeCategory);
+
+  return (
+    <div className="container mx-auto px-4">
+      <div className="text-center mb-12">
+        <h2 className="text-4xl font-bold text-gray-900 mb-4">{title || 'Our Projects'}</h2>
+        <p className="text-gray-600 max-w-2xl mx-auto">Explore our wide range of premium properties in Noida, Greater Noida, and Delhi NCR.</p>
+      </div>
+
+      {/* Category Filter */}
+      <div className="flex flex-wrap justify-center gap-4 mb-12">
+        {CATEGORIES.map((cat) => (
+          <button
+            key={cat.id}
+            onClick={() => setActiveCategory(cat.id)}
+            className={`flex items-center space-x-2 px-6 py-3 rounded-full font-medium transition-all ${
+              activeCategory === cat.id 
+                ? 'bg-red-600 text-white shadow-lg shadow-red-600/30' 
+                : 'bg-white text-gray-600 hover:bg-gray-100 border border-gray-200'
+            }`}
+          >
+            <cat.icon size={18} />
+            <span>{cat.id}</span>
+          </button>
+        ))}
+      </div>
+
+      {loading ? (
+        <div className="flex justify-center py-20">
+          <Loader2 className="animate-spin text-red-600" size={40} />
+        </div>
+      ) : (
+        <motion.div 
+          layout
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+        >
+          <AnimatePresence mode="popLayout">
+            {filteredProjects.map((project) => (
+              <motion.div
+                key={project.id}
+                layout
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.3 }}
+                className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all border border-gray-100 group"
+              >
+                <div className="relative h-64 overflow-hidden">
+                  <img
+                    src={getDirectImageUrl(project.image)}
+                    alt={project.title}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    referrerPolicy="no-referrer"
+                  />
+                  <div className="absolute top-4 right-4 bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                    {project.type}
+                  </div>
+                </div>
+                <div className="p-6">
+                  <div className="flex items-center text-red-600 text-sm font-semibold mb-2">
+                    <MapPin size={14} className="mr-1" />
+                    <span>{project.location}</span>
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-red-600 transition-colors">
+                    {project.title}
+                  </h3>
+                  <p className="text-gray-600 text-sm mb-6 line-clamp-2">
+                    {project.description}
+                  </p>
+                  <button 
+                    onClick={() => {
+                      const contactSection = document.getElementById('contact');
+                      if (contactSection) contactSection.scrollIntoView({ behavior: 'smooth' });
+                    }}
+                    className="w-full flex items-center justify-center space-x-2 bg-gray-900 hover:bg-red-600 text-white py-3 rounded-xl font-bold transition-all group-hover:shadow-lg group-hover:shadow-red-600/20"
+                  >
+                    <span>Enquire Now</span>
+                    <ChevronRight size={18} />
+                  </button>
+                </div>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </motion.div>
+      )}
+
+      {/* Empty State */}
+      {!loading && filteredProjects.length === 0 && (
+        <div className="text-center py-20">
+          <Building className="mx-auto text-gray-300 mb-4" size={64} />
+          <h3 className="text-xl font-semibold text-gray-500">No projects found in this category.</h3>
+        </div>
+      )}
+    </div>
+  );
+}
