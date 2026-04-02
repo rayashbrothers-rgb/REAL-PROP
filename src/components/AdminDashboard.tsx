@@ -143,23 +143,23 @@ export default function AdminDashboard({ user, isAdmin, onLogin, onLogout }: { u
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Mobile Header */}
-      <div className="lg:hidden bg-white border-b border-gray-100 px-4 py-4 sticky top-16 z-40">
+      <div className="lg:hidden bg-white border-b border-gray-100 px-4 py-3 sticky top-16 z-40 shadow-sm">
         <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 rounded-full bg-red-600 flex items-center justify-center text-white font-bold">
+          <div className="flex items-center space-x-3 min-w-0">
+            <div className="w-9 h-9 rounded-full bg-red-600 flex-shrink-0 flex items-center justify-center text-white font-bold text-sm">
               L
             </div>
-            <div>
-              <h4 className="font-bold text-gray-900 text-sm">LALIT KUMAR</h4>
-              <p className="text-[10px] text-gray-500 uppercase tracking-widest">Admin</p>
+            <div className="min-w-0">
+              <h4 className="font-bold text-gray-900 text-xs truncate">LALIT KUMAR</h4>
+              <p className="text-[9px] text-gray-500 uppercase tracking-widest">Admin</p>
             </div>
           </div>
-          <button onClick={onLogout} className="p-2 text-gray-400 hover:text-red-600">
-            <LogOut size={20} />
+          <button onClick={onLogout} className="p-2 text-gray-400 hover:text-red-600 flex-shrink-0">
+            <LogOut size={18} />
           </button>
         </div>
         
-        <nav className="flex space-x-2 mt-4 overflow-x-auto pb-2 scrollbar-hide">
+        <nav className="flex space-x-2 mt-3 overflow-x-auto pb-1 scrollbar-hide">
           <Link to="/admin" className={cn(
             "flex items-center space-x-2 px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap transition-all",
             location.pathname === '/admin' ? "bg-red-600 text-white shadow-lg shadow-red-200" : "bg-gray-100 text-gray-600"
@@ -184,8 +184,8 @@ export default function AdminDashboard({ user, isAdmin, onLogin, onLogout }: { u
         </nav>
       </div>
 
-      <div className="container mx-auto px-4 py-8 lg:py-12">
-        <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
+      <div className="container mx-auto px-4 py-6 sm:py-8 lg:py-12">
+        <div className="flex flex-col lg:flex-row gap-6 lg:gap-12">
           {/* Desktop Sidebar */}
           <aside className="hidden lg:block lg:w-1/4 space-y-4">
             <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 sticky top-28">
@@ -309,24 +309,24 @@ function DashboardStats() {
 
   return (
     <div className="space-y-8">
-      <div className="flex justify-between items-center">
-        <h2 className="text-3xl font-bold text-gray-900">Dashboard Overview</h2>
-        <div className="flex items-center space-x-6">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <h2 className="text-2xl lg:text-3xl font-bold text-gray-900">Dashboard Overview</h2>
+        <div className="flex flex-wrap items-center gap-4 sm:gap-6">
           <button
             onClick={handleRegenerateHero}
             disabled={isRegenerating}
-            className="flex items-center space-x-2 text-sm font-bold text-gray-500 hover:text-red-600 transition-colors disabled:opacity-50"
+            className="flex items-center space-x-2 text-xs sm:text-sm font-bold text-gray-500 hover:text-red-600 transition-colors disabled:opacity-50"
           >
-            {isRegenerating ? <Loader2 size={16} className="animate-spin" /> : <ImageIcon size={16} />}
-            <span>Regenerate Hero Image</span>
+            {isRegenerating ? <Loader2 size={14} className="animate-spin" /> : <ImageIcon size={14} />}
+            <span>Regenerate Hero</span>
           </button>
           <button
             onClick={handleSeedData}
             disabled={isSeeding}
-            className="flex items-center space-x-2 text-sm font-bold text-gray-500 hover:text-red-600 transition-colors disabled:opacity-50"
+            className="flex items-center space-x-2 text-xs sm:text-sm font-bold text-gray-500 hover:text-red-600 transition-colors disabled:opacity-50"
           >
-            {isSeeding ? <Loader2 size={16} className="animate-spin" /> : <Database size={16} />}
-            <span>Seed Sample Projects</span>
+            {isSeeding ? <Loader2 size={14} className="animate-spin" /> : <Database size={14} />}
+            <span>Seed Data</span>
           </button>
         </div>
       </div>
@@ -382,12 +382,12 @@ function ProjectManagement() {
   return (
     <div className="space-y-8">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <h2 className="text-2xl lg:text-3xl font-bold text-gray-900">Project Management</h2>
+        <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900">Project Management</h2>
         <button
           onClick={() => setIsAdding(true)}
-          className="w-full sm:w-auto bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-xl font-bold flex items-center justify-center space-x-2 shadow-lg shadow-red-600/20"
+          className="w-full sm:w-auto bg-red-600 hover:bg-red-700 text-white px-5 py-2.5 sm:px-6 sm:py-3 rounded-xl font-bold flex items-center justify-center space-x-2 shadow-lg shadow-red-600/20 text-sm"
         >
-          <Plus size={20} />
+          <Plus size={18} />
           <span>Add Project</span>
         </button>
       </div>
@@ -406,15 +406,15 @@ function ProjectManagement() {
 
       <div className="grid grid-cols-1 gap-4 lg:hidden">
         {projects.map((project) => (
-          <div key={project.id} className="bg-white p-4 rounded-2xl shadow-md border border-gray-100 flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <img src={getDirectImageUrl(project.image)} className="w-12 h-12 rounded-lg object-cover" alt="" referrerPolicy="no-referrer" />
-              <div>
-                <p className="font-bold text-gray-900 text-sm">{project.title}</p>
-                <p className="text-[10px] text-gray-500">{project.location}</p>
+          <div key={project.id} className="bg-white p-4 rounded-2xl shadow-md border border-gray-100 flex items-center justify-between gap-4">
+            <div className="flex items-center space-x-3 min-w-0">
+              <img src={getDirectImageUrl(project.image)} className="w-12 h-12 rounded-lg object-cover flex-shrink-0" alt="" referrerPolicy="no-referrer" />
+              <div className="min-w-0">
+                <p className="font-bold text-gray-900 text-sm truncate">{project.title}</p>
+                <p className="text-[10px] text-gray-500 truncate">{project.location}</p>
               </div>
             </div>
-            <div className="flex space-x-2">
+            <div className="flex space-x-1 flex-shrink-0">
               <button onClick={() => setEditingProject(project)} className="p-2 text-gray-400 hover:text-blue-600">
                 <Edit size={16} />
               </button>
@@ -535,18 +535,18 @@ function ProjectForm({ project, onClose }: { project: Project | null, onClose: (
       <motion.div
         initial={{ scale: 0.9, y: 20 }}
         animate={{ scale: 1, y: 0 }}
-        className="bg-white w-full max-w-2xl rounded-3xl shadow-2xl overflow-hidden"
+        className="bg-white w-full max-w-2xl rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden"
       >
-        <div className="p-8 border-b border-gray-100 flex justify-between items-center">
-          <h3 className="text-2xl font-bold text-gray-900">{project ? 'Edit Project' : 'Add New Project'}</h3>
+        <div className="p-5 sm:p-8 border-b border-gray-100 flex justify-between items-center">
+          <h3 className="text-xl sm:text-2xl font-bold text-gray-900">{project ? 'Edit Project' : 'Add New Project'}</h3>
           <button onClick={onClose} className="text-gray-400 hover:text-gray-600">
             <X size={24} />
           </button>
         </div>
-
-        <form onSubmit={handleSubmit(onSubmit)} className="p-8 space-y-6 max-h-[70vh] overflow-y-auto">
+ 
+        <form onSubmit={handleSubmit(onSubmit)} className="p-5 sm:p-8 space-y-6 max-h-[75vh] overflow-y-auto scrollbar-hide">
           {imageUrl && (
-            <div className="w-full h-48 rounded-2xl overflow-hidden border border-gray-100 bg-gray-50 mb-6">
+            <div className="w-full h-40 sm:h-48 rounded-xl sm:rounded-2xl overflow-hidden border border-gray-100 bg-gray-50 mb-6">
               <img 
                 src={getDirectImageUrl(imageUrl)} 
                 alt="Preview" 
@@ -558,41 +558,41 @@ function ProjectForm({ project, onClose }: { project: Project | null, onClose: (
               />
             </div>
           )}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
             <div className="space-y-2">
-              <label className="text-xs font-bold text-gray-500 uppercase flex items-center gap-2">
-                <Tag size={14} /> Title *
+              <label className="text-[10px] font-bold text-gray-500 uppercase flex items-center gap-2">
+                <Tag size={12} /> Title *
               </label>
               <input
                 {...register('title', { required: 'Title is required' })}
-                className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-red-500 outline-none"
+                className="w-full px-4 py-2.5 sm:py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-red-500 outline-none text-sm"
               />
             </div>
             <div className="space-y-2">
-              <label className="text-xs font-bold text-gray-500 uppercase flex items-center gap-2">
-                <MapPin size={14} /> Location *
+              <label className="text-[10px] font-bold text-gray-500 uppercase flex items-center gap-2">
+                <MapPin size={12} /> Location *
               </label>
               <input
                 {...register('location', { required: 'Location is required' })}
-                className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-red-500 outline-none"
+                className="w-full px-4 py-2.5 sm:py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-red-500 outline-none text-sm"
               />
             </div>
             <div className="space-y-2">
-              <label className="text-xs font-bold text-gray-500 uppercase flex items-center gap-2">
-                <ImageIcon size={14} /> Image URL *
+              <label className="text-[10px] font-bold text-gray-500 uppercase flex items-center gap-2">
+                <ImageIcon size={12} /> Image URL *
               </label>
               <input
                 {...register('image', { required: 'Image URL is required' })}
-                className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-red-500 outline-none"
+                className="w-full px-4 py-2.5 sm:py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-red-500 outline-none text-sm"
               />
             </div>
             <div className="space-y-2">
-              <label className="text-xs font-bold text-gray-500 uppercase flex items-center gap-2">
-                <Building size={14} /> Category *
+              <label className="text-[10px] font-bold text-gray-500 uppercase flex items-center gap-2">
+                <Building size={12} /> Category *
               </label>
               <select
                 {...register('category', { required: 'Category is required' })}
-                className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-red-500 outline-none bg-white"
+                className="w-full px-4 py-2.5 sm:py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-red-500 outline-none bg-white text-sm"
               >
                 <option value="Residential">Residential</option>
                 <option value="Commercial">Commercial</option>
@@ -601,42 +601,42 @@ function ProjectForm({ project, onClose }: { project: Project | null, onClose: (
               </select>
             </div>
             <div className="space-y-2">
-              <label className="text-xs font-bold text-gray-500 uppercase flex items-center gap-2">
-                <Tag size={14} /> Property Type *
+              <label className="text-[10px] font-bold text-gray-500 uppercase flex items-center gap-2">
+                <Tag size={12} /> Property Type *
               </label>
               <input
                 {...register('type', { required: 'Type is required' })}
                 placeholder="e.g. 3 BHK Flat, Shop, Office"
-                className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-red-500 outline-none"
+                className="w-full px-4 py-2.5 sm:py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-red-500 outline-none text-sm"
               />
             </div>
           </div>
-
+ 
           <div className="space-y-2">
-            <label className="text-xs font-bold text-gray-500 uppercase flex items-center gap-2">
-              <FileText size={14} /> Description *
+            <label className="text-[10px] font-bold text-gray-500 uppercase flex items-center gap-2">
+              <FileText size={12} /> Description *
             </label>
             <textarea
               {...register('description', { required: 'Description is required' })}
-              rows={4}
-              className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-red-500 outline-none resize-none"
+              rows={3}
+              className="w-full px-4 py-2.5 sm:py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-red-500 outline-none resize-none text-sm"
             />
           </div>
-
-          <div className="pt-4 flex gap-4">
+ 
+          <div className="pt-2 flex gap-3 sm:gap-4">
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-4 rounded-xl transition-all"
+              className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-3 sm:py-4 rounded-xl transition-all text-sm"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={isSubmitting}
-              className="flex-1 bg-red-600 hover:bg-red-700 text-white font-bold py-4 rounded-xl shadow-lg shadow-red-600/20 flex items-center justify-center space-x-2 disabled:opacity-70"
+              className="flex-1 bg-red-600 hover:bg-red-700 text-white font-bold py-3 sm:py-4 rounded-xl shadow-lg shadow-red-600/20 flex items-center justify-center space-x-2 disabled:opacity-70 text-sm"
             >
-              {isSubmitting ? <Loader2 className="animate-spin" size={20} /> : <span>{project ? 'Update Project' : 'Add Project'}</span>}
+              {isSubmitting ? <Loader2 className="animate-spin" size={18} /> : <span>{project ? 'Update' : 'Add'}</span>}
             </button>
           </div>
         </form>
@@ -681,17 +681,17 @@ function LeadManagement() {
       <div className="grid grid-cols-1 gap-4 lg:hidden">
         {leads.map((lead) => (
           <div key={lead.id} className="bg-white p-4 rounded-2xl shadow-md border border-gray-100 space-y-4">
-            <div className="flex justify-between items-start">
-              <div>
-                <p className="font-bold text-gray-900">{lead.name}</p>
+            <div className="flex justify-between items-start gap-4">
+              <div className="min-w-0">
+                <p className="font-bold text-gray-900 truncate">{lead.name}</p>
                 <div className="flex items-center space-x-2">
                   <p className="text-xs text-red-600 font-medium">{lead.phone}</p>
-                  <button onClick={() => copyToClipboard(lead.phone, lead.id)} className="text-gray-400">
+                  <button onClick={() => copyToClipboard(lead.phone, lead.id)} className="text-gray-400 flex-shrink-0">
                     {copiedId === lead.id ? <Check size={12} className="text-green-500" /> : <Copy size={12} />}
                   </button>
                 </div>
               </div>
-              <button onClick={() => handleDeleteLead(lead.id)} className="text-gray-300 hover:text-red-600">
+              <button onClick={() => handleDeleteLead(lead.id)} className="text-gray-300 hover:text-red-600 flex-shrink-0">
                 <Trash2 size={16} />
               </button>
             </div>
