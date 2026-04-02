@@ -91,15 +91,23 @@ export default function AdminDashboard({ user, isAdmin }: { user: User | null, i
             <X size={40} />
           </div>
           <h2 className="text-3xl font-bold text-gray-900 mb-4">Access Denied</h2>
-          <p className="text-gray-600 mb-10 leading-relaxed">
-            Your account ({user.email}) is not authorized to access this panel. Please contact the administrator.
+          <p className="text-gray-600 mb-6 leading-relaxed">
+            Your account (<span className="font-bold text-red-600">{user.email}</span>) is not authorized to access this panel.
           </p>
+          <div className="bg-gray-50 p-4 rounded-xl mb-10 text-left">
+            <p className="text-xs text-gray-400 uppercase font-bold mb-2">Troubleshooting:</p>
+            <ul className="text-xs text-gray-500 space-y-1 list-disc pl-4">
+              <li>Ensure you are using the primary admin email.</li>
+              <li>Check if your Vercel domain is added to Firebase Authorized Domains.</li>
+              <li>Try logging out and logging back in.</li>
+            </ul>
+          </div>
           <button
             onClick={logout}
             className="w-full bg-gray-900 hover:bg-gray-800 text-white font-bold py-4 rounded-xl shadow-lg flex items-center justify-center space-x-3 transition-all"
           >
             <LogOut size={20} />
-            <span>Logout</span>
+            <span>Logout & Switch Account</span>
           </button>
         </div>
       </div>
@@ -174,6 +182,7 @@ export default function AdminDashboard({ user, isAdmin }: { user: User | null, i
 function DashboardStats() {
   const [stats, setStats] = useState({ projects: 0, leads: 0 });
   const [isSeeding, setIsSeeding] = useState(false);
+  const [isRegenerating, setIsRegenerating] = useState(false);
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -206,18 +215,39 @@ function DashboardStats() {
     }
   };
 
+  const handleRegenerateHero = () => {
+    if (!window.confirm('This will clear the cached hero image and force a new generation. Continue?')) return;
+    setIsRegenerating(true);
+    localStorage.removeItem('hero_bg_image');
+    setTimeout(() => {
+      setIsRegenerating(false);
+      alert('Cache cleared! The hero image will regenerate on the next homepage visit.');
+      window.location.href = '/';
+    }, 1000);
+  };
+
   return (
     <div className="space-y-8">
       <div className="flex justify-between items-center">
         <h2 className="text-3xl font-bold text-gray-900">Dashboard Overview</h2>
-        <button
-          onClick={handleSeedData}
-          disabled={isSeeding}
-          className="flex items-center space-x-2 text-sm font-bold text-gray-500 hover:text-red-600 transition-colors disabled:opacity-50"
-        >
-          {isSeeding ? <Loader2 size={16} className="animate-spin" /> : <Database size={16} />}
-          <span>Seed Sample Projects</span>
-        </button>
+        <div className="flex items-center space-x-6">
+          <button
+            onClick={handleRegenerateHero}
+            disabled={isRegenerating}
+            className="flex items-center space-x-2 text-sm font-bold text-gray-500 hover:text-red-600 transition-colors disabled:opacity-50"
+          >
+            {isRegenerating ? <Loader2 size={16} className="animate-spin" /> : <ImageIcon size={16} />}
+            <span>Regenerate Hero Image</span>
+          </button>
+          <button
+            onClick={handleSeedData}
+            disabled={isSeeding}
+            className="flex items-center space-x-2 text-sm font-bold text-gray-500 hover:text-red-600 transition-colors disabled:opacity-50"
+          >
+            {isSeeding ? <Loader2 size={16} className="animate-spin" /> : <Database size={16} />}
+            <span>Seed Sample Projects</span>
+          </button>
+        </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="bg-white p-8 rounded-3xl shadow-xl border border-gray-100 flex items-center justify-between">

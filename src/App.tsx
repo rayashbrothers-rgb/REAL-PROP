@@ -80,7 +80,7 @@ export default function App() {
     return () => unsubscribe();
   }, []);
 
-  const isAdmin = user?.email === ADMIN_EMAIL;
+  const isAdmin = user?.email?.toLowerCase() === ADMIN_EMAIL.toLowerCase();
 
   if (!isAuthReady) {
     return (
