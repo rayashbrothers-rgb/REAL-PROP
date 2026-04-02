@@ -71,16 +71,37 @@ function HomePage() {
 export default function App() {
   const [user, setUser] = useState<User | null>(null);
   const [isAuthReady, setIsAuthReady] = useState(false);
+  const [isCustomAdmin, setIsCustomAdmin] = useState(false);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (u) => {
       setUser(u);
       setIsAuthReady(true);
     });
+    
+    // Check for custom admin session
+    const adminSession = sessionStorage.getItem('realprop_admin_session');
+    if (adminSession === 'true') {
+      setIsCustomAdmin(true);
+    }
+
     return () => unsubscribe();
   }, []);
 
-  const isAdmin = user?.email?.toLowerCase() === ADMIN_EMAIL.toLowerCase();
+  const isAdmin = (user?.email?.toLowerCase() === ADMIN_EMAIL.toLowerCase()) || isCustomAdmin;
+
+  const handleCustomLogin = (success: boolean) => {
+    if (success) {
+      setIsCustomAdmin(true);
+      sessionStorage.setItem('realprop_admin_session', 'true');
+    }
+  };
+
+  const handleCustomLogout = () => {
+    setIsCustomAdmin(false);
+    sessionStorage.removeItem('realprop_admin_session');
+    logout();
+  };
 
   if (!isAuthReady) {
     return (
@@ -117,7 +138,7 @@ export default function App() {
             <Route path="/noida-extension" element={<NoidaExtension />} />
             <Route path="/ghaziabad" element={<Ghaziabad />} />
             <Route path="/delhi" element={<Delhi />} />
-            <Route path="/admin/*" element={<AdminDashboard user={user} isAdmin={isAdmin} />} />
+            <Route path="/admin/*" element={<AdminDashboard user={user} isAdmin={isAdmin} onLogin={handleCustomLogin} onLogout={handleCustomLogout} />} />
           </Routes>
         </main>
         <Footer />

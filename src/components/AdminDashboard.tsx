@@ -6,7 +6,7 @@ import { collection, query, orderBy, onSnapshot, addDoc, updateDoc, deleteDoc, d
 import { Project, Lead } from '../types';
 import { useForm, useWatch } from 'react-hook-form';
 import { motion, AnimatePresence } from 'motion/react';
-import { LayoutDashboard, Plus, Trash2, Edit, LogOut, ChevronRight, Loader2, Building, Users, CheckCircle2, X, Image as ImageIcon, MapPin, Tag, FileText, Database, Copy, Check } from 'lucide-react';
+import { LayoutDashboard, Plus, Trash2, Edit, LogOut, ChevronRight, Loader2, Building, Users, CheckCircle2, X, Image as ImageIcon, MapPin, Tag, FileText, Database, Copy, Check, Lock, LogIn } from 'lucide-react';
 import { getDirectImageUrl } from '../lib/imageUtils';
 
 const SEED_PROJECTS: Partial<Project>[] = [
@@ -52,64 +52,86 @@ const SEED_PROJECTS: Partial<Project>[] = [
   }
 ];
 
-export default function AdminDashboard({ user, isAdmin }: { user: User | null, isAdmin: boolean }) {
+export default function AdminDashboard({ user, isAdmin, onLogin, onLogout }: { user: User | null, isAdmin: boolean, onLogin: (success: boolean) => void, onLogout: () => void }) {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  if (!user) {
-    return (
-      <div className="min-h-[80vh] flex flex-col items-center justify-center p-4">
-        <div className="max-w-md w-full bg-white p-10 rounded-3xl shadow-2xl border border-gray-100 text-center">
-          <div className="w-32 h-32 bg-white rounded-2xl flex items-center justify-center mx-auto mb-8 overflow-hidden shadow-sm border border-gray-100">
-            <img 
-              src="https://instasize.com/api/image/87e2fdb8828fd9cdfa4566774e9ba73c587ea743872310c777de048c2b9dd4b1.jpeg" 
-              alt="REAL PROP Logo" 
-              className="w-full h-full object-contain p-2"
-              referrerPolicy="no-referrer"
-            />
-          </div>
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Admin Login</h2>
-          <p className="text-gray-600 mb-10 leading-relaxed">
-            Please sign in with your authorized Google account to access the REAL PROP admin panel.
-          </p>
-          <button
-            onClick={signInWithGoogle}
-            className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-4 rounded-xl shadow-lg shadow-red-600/20 flex items-center justify-center space-x-3 transition-all"
-          >
-            <img src="https://www.google.com/favicon.ico" className="w-5 h-5" alt="Google" />
-            <span>Sign in with Google</span>
-          </button>
-        </div>
-      </div>
-    );
-  }
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (username === 'LALIT KUMAR' && password === 'realprop96') {
+      onLogin(true);
+      setError('');
+    } else {
+      setError('Invalid username or password');
+    }
+  };
 
   if (!isAdmin) {
     return (
-      <div className="min-h-[80vh] flex flex-col items-center justify-center p-4">
-        <div className="max-w-md w-full bg-white p-10 rounded-3xl shadow-2xl border border-gray-100 text-center">
-          <div className="w-20 h-20 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto mb-8">
-            <X size={40} />
+      <div className="min-h-[80vh] flex flex-col items-center justify-center p-4 bg-gray-50">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="max-w-md w-full bg-white p-10 rounded-3xl shadow-2xl border border-gray-100"
+        >
+          <div className="text-center mb-8">
+            <div className="w-20 h-20 bg-red-50 text-red-600 rounded-full flex items-center justify-center mx-auto mb-6">
+              <Lock size={40} />
+            </div>
+            <h2 className="text-3xl font-bold text-gray-900">Admin Login</h2>
+            <p className="text-gray-500 mt-2">Enter your credentials to access the panel</p>
           </div>
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Access Denied</h2>
-          <p className="text-gray-600 mb-6 leading-relaxed">
-            Your account (<span className="font-bold text-red-600">{user.email}</span>) is not authorized to access this panel.
-          </p>
-          <div className="bg-gray-50 p-4 rounded-xl mb-10 text-left">
-            <p className="text-xs text-gray-400 uppercase font-bold mb-2">Troubleshooting:</p>
-            <ul className="text-xs text-gray-500 space-y-1 list-disc pl-4">
-              <li>Ensure you are using the primary admin email.</li>
-              <li>Check if your Vercel domain is added to Firebase Authorized Domains.</li>
-              <li>Try logging out and logging back in.</li>
-            </ul>
+
+          <form onSubmit={handleLogin} className="space-y-6">
+            <div>
+              <label className="block text-sm font-bold text-gray-700 mb-2">Username</label>
+              <input
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                className="w-full px-5 py-4 rounded-xl border border-gray-200 focus:ring-2 focus:ring-red-600 focus:border-transparent outline-none transition-all"
+                placeholder="Enter username"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-bold text-gray-700 mb-2">Password</label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full px-5 py-4 rounded-xl border border-gray-200 focus:ring-2 focus:ring-red-600 focus:border-transparent outline-none transition-all"
+                placeholder="Enter password"
+                required
+              />
+            </div>
+
+            {error && (
+              <motion.div 
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                className="text-red-600 text-sm font-bold bg-red-50 p-4 rounded-xl flex items-center space-x-2"
+              >
+                <X size={16} />
+                <span>{error}</span>
+              </motion.div>
+            )}
+
+            <button
+              type="submit"
+              className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-4 rounded-xl shadow-lg shadow-red-200 flex items-center justify-center space-x-3 transition-all"
+            >
+              <LogIn size={20} />
+              <span>Login to Dashboard</span>
+            </button>
+          </form>
+
+          <div className="mt-8 pt-8 border-t border-gray-100 text-center">
+            <p className="text-xs text-gray-400 uppercase font-bold tracking-widest">Authorized Access Only</p>
           </div>
-          <button
-            onClick={logout}
-            className="w-full bg-gray-900 hover:bg-gray-800 text-white font-bold py-4 rounded-xl shadow-lg flex items-center justify-center space-x-3 transition-all"
-          >
-            <LogOut size={20} />
-            <span>Logout & Switch Account</span>
-          </button>
-        </div>
+        </motion.div>
       </div>
     );
   }
@@ -121,10 +143,12 @@ export default function AdminDashboard({ user, isAdmin }: { user: User | null, i
         <aside className="lg:w-1/4 space-y-4">
           <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100">
             <div className="flex items-center space-x-4 mb-8">
-              <img src={user.photoURL || ''} className="w-12 h-12 rounded-full border-2 border-red-600" alt={user.displayName || ''} />
+              <div className="w-12 h-12 rounded-full bg-red-600 flex items-center justify-center text-white font-bold text-xl">
+                L
+              </div>
               <div>
-                <h4 className="font-bold text-gray-900 text-sm">{user.displayName}</h4>
-                <p className="text-xs text-gray-500 truncate max-w-[150px]">{user.email}</p>
+                <h4 className="font-bold text-gray-900 text-sm">LALIT KUMAR</h4>
+                <p className="text-xs text-gray-500">Administrator</p>
               </div>
             </div>
 
@@ -142,7 +166,7 @@ export default function AdminDashboard({ user, isAdmin }: { user: User | null, i
                 <span>Leads</span>
               </Link>
               <button
-                onClick={logout}
+                onClick={onLogout}
                 className="w-full flex items-center space-x-3 p-3 rounded-xl hover:bg-gray-100 text-gray-700 transition-all font-medium mt-8"
               >
                 <LogOut size={20} />
