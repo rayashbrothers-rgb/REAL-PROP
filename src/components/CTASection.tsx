@@ -28,16 +28,17 @@ export default function CTASection() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-4xl md:text-5xl font-bold text-white mb-8 leading-tight"
+            className="text-5xl md:text-7xl font-black text-white mb-8 leading-[1.1] uppercase tracking-tighter"
           >
-            Looking to Invest in <span className="text-red-500">High-Return</span> Commercial Property?
+            Looking to Invest in <br />
+            <span className="text-red-600 drop-shadow-[0_0_20px_rgba(220,38,38,0.5)]">High-Return</span> Property?
           </motion.h2>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-xl text-gray-400 mb-12"
+            className="text-xl md:text-2xl text-gray-400 mb-12 font-bold max-w-3xl mx-auto"
           >
             Get exclusive access to the best retail shops and office spaces in Delhi NCR. Our experts are ready to help you find the perfect investment.
           </motion.p>
@@ -47,28 +48,28 @@ export default function CTASection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="flex flex-col sm:flex-row justify-center gap-6"
+            className="flex flex-col sm:flex-row justify-center gap-8"
           >
             <button 
               onClick={scrollToLeadForm}
-              className="bg-red-600 text-white hover:bg-red-700 px-10 py-5 rounded-2xl font-bold text-lg flex items-center justify-center space-x-3 transition-all shadow-xl shadow-red-600/20"
+              className="bg-red-600 text-white hover:bg-red-700 px-12 py-6 rounded-2xl font-black text-xl flex items-center justify-center space-x-4 transition-all shadow-2xl shadow-red-600/30 hover:scale-105"
             >
-              <ArrowRight size={24} />
-              <span>Get Details</span>
+              <ArrowRight size={28} />
+              <span>GET DETAILS</span>
             </button>
             <button 
               onClick={handleCall}
-              className="bg-white text-gray-900 hover:bg-gray-100 px-10 py-5 rounded-2xl font-bold text-lg flex items-center justify-center space-x-3 transition-all shadow-xl shadow-white/10"
+              className="bg-white text-gray-900 hover:bg-gray-100 px-12 py-6 rounded-2xl font-black text-xl flex items-center justify-center space-x-4 transition-all shadow-2xl hover:scale-105"
             >
-              <Phone size={24} />
-              <span>Book Site Visit</span>
+              <Phone size={28} />
+              <span>BOOK VISIT</span>
             </button>
             <button 
               onClick={handleWhatsApp}
-              className="bg-green-600 text-white hover:bg-green-700 px-10 py-5 rounded-2xl font-bold text-lg flex items-center justify-center space-x-3 transition-all shadow-xl shadow-green-600/20"
+              className="bg-green-600 text-white hover:bg-green-700 px-12 py-6 rounded-2xl font-black text-xl flex items-center justify-center space-x-4 transition-all shadow-2xl shadow-green-600/30 hover:scale-105"
             >
-              <MessageCircle size={24} />
-              <span>WhatsApp Now</span>
+              <MessageCircle size={28} />
+              <span>WHATSAPP NOW</span>
             </button>
           </motion.div>
         </div>

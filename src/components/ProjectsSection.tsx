@@ -38,8 +38,17 @@ export default function ProjectsSection({ title }: { title?: string }) {
   return (
     <div className="container mx-auto px-4">
       <div className="text-center mb-12">
-        <h2 className="text-4xl font-bold text-gray-900 mb-4">{title || 'Our Projects'}</h2>
-        <p className="text-gray-600 max-w-2xl mx-auto">Explore our wide range of premium properties in Noida, Greater Noida, and Delhi NCR.</p>
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.9 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          className="inline-flex items-center space-x-2 bg-red-50 border border-red-100 px-4 py-2 rounded-full text-red-600 font-black text-xs uppercase tracking-[0.2em] mb-6"
+        >
+          <TrendingUp size={14} />
+          <span>High Demand Locations</span>
+        </motion.div>
+        <h2 className="text-4xl md:text-5xl font-black text-gray-900 mb-4">{title || 'Our Projects'}</h2>
+        <p className="text-gray-600 max-w-2xl mx-auto font-medium">Explore our wide range of premium properties in Noida, Greater Noida, and Delhi NCR.</p>
       </div>
 
       {/* Category Filter */}
@@ -112,10 +121,10 @@ export default function ProjectsSection({ title }: { title?: string }) {
                         if (contactSection) contactSection.scrollIntoView({ behavior: 'smooth' });
                       }
                     }}
-                    className="w-full flex items-center justify-center space-x-2 bg-gray-900 hover:bg-red-600 text-white py-3 rounded-xl font-bold transition-all group-hover:shadow-lg group-hover:shadow-red-600/20"
+                    className="w-full flex items-center justify-center space-x-2 bg-red-600 hover:bg-red-700 text-white py-4 rounded-xl font-black transition-all shadow-lg shadow-red-600/20 hover:shadow-red-600/40"
                   >
-                    <span>Get Details</span>
-                    <ChevronRight size={18} />
+                    <span>GET DETAILS</span>
+                    <ChevronRight size={20} />
                   </button>
                 </div>
               </motion.div>
