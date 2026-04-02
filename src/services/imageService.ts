@@ -1,7 +1,9 @@
 import { GoogleGenAI } from "@google/genai";
 
 export async function generateHeroImage(logoBase64: string) {
-  const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY! });
+  const apiKey = import.meta.env.VITE_GEMINI_API_KEY || process.env.GEMINI_API_KEY;
+  if (!apiKey) return null;
+  const ai = new GoogleGenAI({ apiKey });
   const response = await ai.models.generateContent({
     model: 'gemini-2.5-flash-image',
     contents: {
