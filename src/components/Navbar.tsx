@@ -60,7 +60,7 @@ export default function Navbar({ isAdmin }: { isAdmin: boolean }) {
           <img 
             src="https://instasize.com/api/image/87e2fdb8828fd9cdfa4566774e9ba73c587ea743872310c777de048c2b9dd4b1.jpeg" 
             alt="REAL PROP Logo" 
-            className="h-14 w-auto object-contain"
+            className="h-12 w-12 rounded-full object-cover border-2 border-red-600 shadow-sm"
             referrerPolicy="no-referrer"
           />
         </Link>

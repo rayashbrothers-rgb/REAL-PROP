@@ -19,7 +19,7 @@ export default function Footer() {
               <img 
                 src="https://instasize.com/api/image/87e2fdb8828fd9cdfa4566774e9ba73c587ea743872310c777de048c2b9dd4b1.jpeg" 
                 alt="REAL PROP Logo" 
-                className="h-20 w-auto object-contain brightness-0 invert"
+                className="h-16 w-16 rounded-full object-cover border-2 border-red-600 shadow-lg mb-2"
                 referrerPolicy="no-referrer"
               />
             </Link>
