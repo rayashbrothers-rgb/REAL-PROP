@@ -130,7 +130,7 @@ export default function App() {
     <Router>
       <div className="min-h-screen flex flex-col font-sans text-gray-900">
         <Navbar isAdmin={isAdmin} />
-        <main className="flex-grow pt-16">
+        <main className="flex-grow">
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/greater-noida" element={<GreaterNoida />} />

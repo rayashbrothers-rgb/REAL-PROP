@@ -79,7 +79,7 @@ export default function Navbar({ isAdmin }: { isAdmin: boolean }) {
               }}
               className={cn(
                 'text-sm font-medium hover:text-red-600 transition-colors',
-                scrolled ? 'text-gray-700' : 'text-gray-900'
+                scrolled ? 'text-gray-700' : 'text-white'
               )}
             >
               {link.name}
@@ -91,7 +91,7 @@ export default function Navbar({ isAdmin }: { isAdmin: boolean }) {
             <button 
               className={cn(
                 'flex items-center space-x-1 text-sm font-medium hover:text-red-600 transition-colors',
-                scrolled ? 'text-gray-700' : 'text-gray-900'
+                scrolled ? 'text-gray-700' : 'text-white'
               )}
             >
               <span>Locations</span>
