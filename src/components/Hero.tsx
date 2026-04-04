@@ -145,7 +145,7 @@ export default function Hero() {
             >
               <div className="text-3xl md:text-4xl lg:text-5xl font-black text-white flex items-center justify-center lg:justify-end space-x-3">
                 <span className="text-red-600">📞</span>
-                <span className="tracking-tighter">99998 2898</span>
+                <span className="tracking-tighter">9999882898</span>
               </div>
               <p className="text-yellow-500 font-black text-xs uppercase tracking-[0.4em]">Real Estate Consultant</p>
               
