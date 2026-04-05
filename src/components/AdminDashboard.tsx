@@ -359,6 +359,7 @@ function ProjectManagement() {
   const [isAdding, setIsAdding] = useState(false);
   const [editingProject, setEditingProject] = useState<Project | null>(null);
   const [loading, setLoading] = useState(true);
+  const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
 
   useEffect(() => {
     const q = query(collection(db, 'projects'), orderBy('createdAt', 'desc'));
@@ -370,12 +371,11 @@ function ProjectManagement() {
   }, []);
 
   const handleDelete = async (id: string) => {
-    if (window.confirm('Are you sure you want to delete this project?')) {
-      try {
-        await deleteDoc(doc(db, 'projects', id));
-      } catch (error) {
-        handleFirestoreError(error, OperationType.DELETE, 'projects');
-      }
+    try {
+      await deleteDoc(doc(db, 'projects', id));
+      setDeleteConfirmId(null);
+    } catch (error) {
+      handleFirestoreError(error, OperationType.DELETE, 'projects');
     }
   };
 
@@ -418,7 +418,7 @@ function ProjectManagement() {
               <button onClick={() => setEditingProject(project)} className="p-2 text-gray-400 hover:text-blue-600">
                 <Edit size={16} />
               </button>
-              <button onClick={() => handleDelete(project.id)} className="p-2 text-gray-400 hover:text-red-600">
+              <button onClick={() => setDeleteConfirmId(project.id)} className="p-2 text-gray-400 hover:text-red-600">
                 <Trash2 size={16} />
               </button>
             </div>
@@ -467,7 +467,7 @@ function ProjectManagement() {
                       <Edit size={18} />
                     </button>
                     <button
-                      onClick={() => handleDelete(project.id)}
+                      onClick={() => setDeleteConfirmId(project.id)}
                       className="p-2 text-gray-400 hover:text-red-600 transition-colors"
                     >
                       <Trash2 size={18} />
@@ -484,6 +484,39 @@ function ProjectManagement() {
           </div>
         )}
       </div>
+
+      <AnimatePresence>
+        {deleteConfirmId && (
+          <div className="fixed inset-0 z-[70] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="bg-white max-w-sm w-full p-8 rounded-3xl shadow-2xl text-center"
+            >
+              <div className="w-16 h-16 bg-red-50 text-red-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Trash2 size={32} />
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">Delete Project?</h3>
+              <p className="text-gray-500 mb-8">Are you sure you want to delete this project? This action cannot be undone.</p>
+              <div className="flex gap-3">
+                <button
+                  onClick={() => setDeleteConfirmId(null)}
+                  className="flex-1 px-6 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold rounded-xl transition-all"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={() => handleDelete(deleteConfirmId)}
+                  className="flex-1 px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl shadow-lg shadow-red-200 transition-all"
+                >
+                  Delete
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
@@ -649,6 +682,7 @@ function LeadManagement() {
   const [leads, setLeads] = useState<Lead[]>([]);
   const [loading, setLoading] = useState(true);
   const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
 
   useEffect(() => {
     const q = query(collection(db, 'leads'), orderBy('createdAt', 'desc'));
@@ -666,9 +700,9 @@ function LeadManagement() {
   };
 
   const handleDeleteLead = async (id: string) => {
-    if (!window.confirm('Delete this lead?')) return;
     try {
       await deleteDoc(doc(db, 'leads', id));
+      setDeleteConfirmId(null);
     } catch (error) {
       handleFirestoreError(error, OperationType.DELETE, 'leads');
     }
@@ -691,7 +725,7 @@ function LeadManagement() {
                   </button>
                 </div>
               </div>
-              <button onClick={() => handleDeleteLead(lead.id)} className="text-gray-300 hover:text-red-600 flex-shrink-0">
+              <button onClick={() => setDeleteConfirmId(lead.id)} className="text-gray-300 hover:text-red-600 flex-shrink-0">
                 <Trash2 size={16} />
               </button>
             </div>
@@ -754,7 +788,7 @@ function LeadManagement() {
                 </td>
                 <td className="px-6 py-4 text-right">
                   <button 
-                    onClick={() => handleDeleteLead(lead.id)}
+                    onClick={() => setDeleteConfirmId(lead.id)}
                     className="p-2 text-gray-400 hover:text-red-600 transition-colors"
                   >
                     <Trash2 size={16} />
@@ -776,6 +810,39 @@ function LeadManagement() {
           </div>
         )}
       </div>
+
+      <AnimatePresence>
+        {deleteConfirmId && (
+          <div className="fixed inset-0 z-[70] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="bg-white max-w-sm w-full p-8 rounded-3xl shadow-2xl text-center"
+            >
+              <div className="w-16 h-16 bg-red-50 text-red-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Trash2 size={32} />
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">Delete Lead?</h3>
+              <p className="text-gray-500 mb-8">Are you sure you want to delete this lead? This action cannot be undone.</p>
+              <div className="flex gap-3">
+                <button
+                  onClick={() => setDeleteConfirmId(null)}
+                  className="flex-1 px-6 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold rounded-xl transition-all"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={() => handleDeleteLead(deleteConfirmId)}
+                  className="flex-1 px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl shadow-lg shadow-red-200 transition-all"
+                >
+                  Delete
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
