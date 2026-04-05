@@ -64,7 +64,7 @@ export default function AdminDashboard({ user, isAdmin, onLogin, onLogout }: { u
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    if (username === 'LALIT KUMAR' && password === 'realprop96') {
+    if (username === 'lalit.official2898' && password === 'Newindia@1234') {
       onLogin(true);
       setError('');
     } else {
