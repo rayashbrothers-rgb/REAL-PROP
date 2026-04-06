@@ -99,7 +99,7 @@ export default function Hero() {
             }}
             src="https://instasize.com/api/image/87e2fdb8828fd9cdfa4566774e9ba73c587ea743872310c777de048c2b9dd4b1.jpeg"
             alt=""
-            className="w-full h-full object-contain grayscale brightness-[1.1] contrast-[1.3]"
+            className="w-full h-full object-contain grayscale invert mix-blend-screen brightness-[1.2] contrast-[1.2]"
             referrerPolicy="no-referrer"
           />
           {/* Overlay to blend the logo better */}
