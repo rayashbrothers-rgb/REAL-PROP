@@ -39,7 +39,7 @@ export default function InvestorBuyerSections() {
             <motion.div
               key={i}
               whileHover={{ y: -10 }}
-              className="p-8 bg-white rounded-3xl border border-gray-100 shadow-xl shadow-gray-200/50 text-center"
+              className="p-8 bg-white rounded-3xl border border-gray-100 shadow-xl shadow-gray-200/50 text-center will-change-transform"
             >
               <div className={`w-16 h-16 ${item.color} rounded-2xl flex items-center justify-center mb-6 mx-auto`}>
                 <item.icon size={32} />

@@ -70,36 +70,36 @@ export default function Hero() {
         </div>
 
         {/* The "Sun" - Bright Orange/Yellow Disk behind buildings */}
-        <div className="absolute top-[20%] right-[12%] w-[220px] h-[220px] bg-gradient-to-b from-orange-500 to-yellow-500 rounded-full blur-[2px] opacity-60 pointer-events-none" />
-        <div className="absolute top-[18%] right-[10%] w-[300px] h-[300px] bg-orange-600/30 rounded-full blur-[80px] pointer-events-none" />
-        <div className="absolute top-[15%] right-[5%] w-[450px] h-[450px] bg-red-600/10 rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute top-[20%] right-[12%] w-[220px] h-[220px] bg-gradient-to-b from-orange-500 to-yellow-500 rounded-full blur-[1px] opacity-60 pointer-events-none" />
+        <div className="absolute top-[18%] right-[10%] w-[300px] h-[300px] bg-orange-600/30 rounded-full blur-[40px] pointer-events-none" />
+        <div className="absolute top-[15%] right-[5%] w-[450px] h-[450px] bg-red-600/10 rounded-full blur-[60px] pointer-events-none" />
         
         {/* Intense Red Glow in bottom right - The "Energy" */}
-        <div className="absolute bottom-[-15%] right-[-5%] w-[900px] h-[900px] bg-red-600/25 rounded-full blur-[180px] pointer-events-none" />
-        <div className="absolute bottom-[5%] right-[15%] w-[400px] h-[400px] bg-red-500/15 rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-[-15%] right-[-5%] w-[900px] h-[900px] bg-red-600/20 rounded-full blur-[100px] pointer-events-none" />
+        <div className="absolute bottom-[5%] right-[15%] w-[400px] h-[400px] bg-red-500/10 rounded-full blur-[80px] pointer-events-none" />
         
         {/* Subtle Red accent on the left */}
-        <div className="absolute top-[30%] -left-[15%] w-[700px] h-[700px] bg-red-900/15 rounded-full blur-[200px] pointer-events-none" />
+        <div className="absolute top-[30%] -left-[15%] w-[700px] h-[700px] bg-red-900/10 rounded-full blur-[100px] pointer-events-none" />
 
         {/* Watermark Logo - Centered at the top, curved edges, premium feel */}
         <motion.div 
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.5, ease: "easeOut" }}
-          className="absolute top-[8%] md:top-[6%] left-1/2 -translate-x-1/2 w-[75%] md:w-[28%] h-[25%] md:h-[38%] z-0 opacity-[0.25] md:opacity-[0.25] pointer-events-none select-none rounded-[30px] md:rounded-[50px] overflow-hidden border border-white/10 shadow-[0_0_100px_rgba(220,38,38,0.2)]"
+          transition={{ duration: 1.2, ease: "easeOut" }}
+          className="absolute top-[8%] md:top-[6%] left-1/2 -translate-x-1/2 w-[75%] md:w-[28%] h-[25%] md:h-[38%] z-0 opacity-[0.2] md:opacity-[0.2] pointer-events-none select-none rounded-[30px] md:rounded-[50px] overflow-hidden border border-white/10 shadow-[0_0_60px_rgba(220,38,38,0.15)] will-change-transform"
         >
           <motion.img
             animate={{ 
-              y: [0, -10, 0],
+              y: [0, -8, 0],
             }}
             transition={{ 
-              duration: 6, 
+              duration: 8, 
               repeat: Infinity, 
               ease: "easeInOut" 
             }}
             src="https://instasize.com/api/image/87e2fdb8828fd9cdfa4566774e9ba73c587ea743872310c777de048c2b9dd4b1.jpeg"
             alt=""
-            className="w-full h-full object-contain grayscale invert mix-blend-screen brightness-[1.2] contrast-[1.2]"
+            className="w-full h-full object-contain grayscale invert mix-blend-screen brightness-[1.1] contrast-[1.1] will-change-transform"
             referrerPolicy="no-referrer"
           />
           {/* Overlay to blend the logo better */}
@@ -121,16 +121,16 @@ export default function Hero() {
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, ease: "easeOut" }}
-              className="space-y-6 md:space-y-8"
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              className="space-y-6 md:space-y-8 will-change-transform"
             >
               {/* Premium Typography Headline */}
               <div className="space-y-3 md:space-y-4">
                 <motion.div 
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.3 }}
-                  className="flex items-center space-x-3"
+                  transition={{ delay: 0.2 }}
+                  className="flex items-center space-x-3 will-change-transform"
                 >
                   <div className="h-[1px] w-12 bg-red-600" />
                   <span className="text-red-500 font-bold text-xs uppercase tracking-[0.4em]">Luxury Real Estate</span>
@@ -163,8 +163,8 @@ export default function Hero() {
                     key={point.label}
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.5 + (i * 0.1) }}
-                    className="flex items-center space-x-3"
+                    transition={{ delay: 0.4 + (i * 0.1) }}
+                    className="flex items-center space-x-3 will-change-transform"
                   >
                     <div className={cn("w-2 h-2 rounded-full", point.color)} />
                     <span className="text-sm font-bold text-gray-200 uppercase tracking-widest">{point.label}</span>
@@ -187,7 +187,7 @@ export default function Hero() {
 
                 <button
                   onClick={handleCall}
-                  className="px-12 py-5 bg-transparent border border-white/30 hover:border-white text-white rounded-full font-bold text-sm transition-all uppercase tracking-[0.2em] backdrop-blur-md"
+                  className="px-12 py-5 bg-transparent border border-white/30 hover:border-white text-white rounded-full font-bold text-sm transition-all uppercase tracking-[0.2em]"
                 >
                   Book Site Visit
                 </button>
@@ -206,15 +206,15 @@ export default function Hero() {
           {/* RIGHT SIDE: PREMIUM GLASSMORPHISM FORM */}
           <div className="lg:col-span-5 flex justify-center lg:justify-end">
             <motion.div
-              initial={{ opacity: 0, scale: 0.95, x: 30 }}
+              initial={{ opacity: 0, scale: 0.98, x: 20 }}
               animate={{ opacity: 1, scale: 1, x: 0 }}
-              transition={{ duration: 1, delay: 0.2 }}
-              className="w-full max-w-[440px] relative group"
+              transition={{ duration: 0.8, delay: 0.1 }}
+              className="w-full max-w-[440px] relative group will-change-transform"
             >
               {/* Intense Glow behind form */}
-              <div className="absolute -inset-10 bg-red-600/10 rounded-[60px] blur-[100px] opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none" />
+              <div className="absolute -inset-10 bg-red-600/5 rounded-[60px] blur-[60px] opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none" />
               
-              <div className="relative bg-black/40 backdrop-blur-[20px] p-12 rounded-[40px] border border-white/10 shadow-[0_30px_100px_rgba(0,0,0,0.5)] overflow-hidden">
+              <div className="relative bg-black/60 p-12 rounded-[40px] border border-white/10 shadow-[0_30px_100px_rgba(0,0,0,0.5)] overflow-hidden">
                 {/* Subtle Top Light Edge */}
                 <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent" />
                 

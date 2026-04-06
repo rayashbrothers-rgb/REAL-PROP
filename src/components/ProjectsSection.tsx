@@ -87,7 +87,7 @@ export default function ProjectsSection({ title }: { title?: string }) {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ duration: 0.3 }}
-                className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all border border-gray-100 group"
+                className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all border border-gray-100 group will-change-transform"
               >
                 <div className="relative h-64 overflow-hidden">
                   <img
