@@ -86,9 +86,9 @@ export default function InvestorBuyerSections() {
                 className="rounded-3xl shadow-2xl"
                 referrerPolicy="no-referrer"
               />
-              <div className="absolute -bottom-6 -left-6 bg-red-600 text-white p-8 rounded-3xl shadow-xl">
-                <p className="text-3xl font-bold mb-1">1000+</p>
-                <p className="text-sm uppercase tracking-wider font-medium opacity-80">Premium Spaces Sold</p>
+              <div className="absolute -bottom-4 -left-4 md:-bottom-6 md:-left-6 bg-red-600 text-white p-6 md:p-8 rounded-2xl md:rounded-3xl shadow-xl">
+                <p className="text-2xl md:text-3xl font-bold mb-1">1000+</p>
+                <p className="text-[10px] md:text-sm uppercase tracking-wider font-medium opacity-80">Premium Spaces Sold</p>
               </div>
             </div>
           </div>

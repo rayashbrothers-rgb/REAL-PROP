@@ -16,21 +16,21 @@ export default function About() {
             <img
               src="https://instasize.com/api/image/5f2cbf5d91e3ce08f94780378c59e96ac4fd41256e0c1ee8172c86049b3539b5.jpeg"
               alt="Real Estate Consultant Lalit Kumar"
-              className="w-full h-[500px] object-cover"
+              className="w-full h-[350px] md:h-[500px] object-cover"
               referrerPolicy="no-referrer"
             />
           </div>
           {/* Decorative Elements */}
-          <div className="absolute -top-6 -left-6 w-32 h-32 bg-red-600 rounded-2xl -z-0 opacity-20" />
-          <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-yellow-500 rounded-2xl -z-0 opacity-20" />
+          <div className="absolute -top-4 -left-4 md:-top-6 md:-left-6 w-24 md:w-32 h-24 md:h-32 bg-red-600 rounded-2xl -z-0 opacity-20" />
+          <div className="absolute -bottom-4 -right-4 md:-bottom-6 md:-right-6 w-24 md:w-32 h-24 md:h-32 bg-yellow-500 rounded-2xl -z-0 opacity-20" />
           
-          <div className="absolute bottom-8 left-8 bg-white p-6 rounded-2xl shadow-xl z-20 flex items-center space-x-4 border border-gray-100">
-            <div className="w-12 h-12 bg-red-100 text-red-600 rounded-full flex items-center justify-center">
-              <Star size={24} fill="currentColor" />
+          <div className="absolute bottom-4 left-4 md:bottom-8 md:left-8 bg-white p-4 md:p-6 rounded-xl md:rounded-2xl shadow-xl z-20 flex items-center space-x-3 md:space-x-4 border border-gray-100">
+            <div className="w-10 h-10 md:w-12 md:h-12 bg-red-100 text-red-600 rounded-full flex items-center justify-center">
+              <Star size={20} className="md:w-6 md:h-6" fill="currentColor" />
             </div>
             <div>
-              <p className="text-sm text-gray-500 font-medium uppercase tracking-wider">Experience</p>
-              <p className="text-xl font-bold text-gray-900">10+ Years in NCR</p>
+              <p className="text-[10px] md:text-sm text-gray-500 font-medium uppercase tracking-wider">Experience</p>
+              <p className="text-lg md:text-xl font-bold text-gray-900">10+ Years in NCR</p>
             </div>
           </div>
         </motion.div>

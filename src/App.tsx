@@ -4,13 +4,7 @@ import { onAuthStateChanged, User } from 'firebase/auth';
 import { auth, signInWithGoogle, logout } from './firebase';
 import { motion, AnimatePresence } from 'motion/react';
 import { Phone, MessageCircle, Menu, X, LayoutDashboard, LogOut, Plus, Trash2, Edit, ChevronRight, Star, MapPin, Building, Home as HomeIcon, Briefcase, TrendingUp, LandPlot, Youtube } from 'lucide-react';
-import { clsx, type ClassValue } from 'clsx';
-import { twMerge } from 'tailwind-merge';
-
-// --- Utils ---
-function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
-}
+import { cn } from './lib/utils';
 
 // --- Components ---
 import Navbar from './components/Navbar';

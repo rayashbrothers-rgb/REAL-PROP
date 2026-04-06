@@ -52,19 +52,19 @@ export default function ProjectsSection({ title }: { title?: string }) {
       </div>
 
       {/* Category Filter */}
-      <div className="flex flex-wrap justify-center gap-4 mb-12">
+      <div className="flex overflow-x-auto md:flex-wrap md:justify-center gap-3 md:gap-4 mb-12 pb-4 md:pb-0 scrollbar-hide -mx-4 px-4 md:mx-0 md:px-0">
         {CATEGORIES.map((cat) => (
           <button
             key={cat.id}
             onClick={() => setActiveCategory(cat.id)}
-            className={`flex items-center space-x-2 px-6 py-3 rounded-full font-medium transition-all ${
+            className={`flex items-center space-x-2 px-5 md:px-6 py-2.5 md:py-3 rounded-full font-medium transition-all whitespace-nowrap ${
               activeCategory === cat.id 
                 ? 'bg-red-600 text-white shadow-lg shadow-red-600/30' 
                 : 'bg-white text-gray-600 hover:bg-gray-100 border border-gray-200'
             }`}
           >
-            <cat.icon size={18} />
-            <span>{cat.id}</span>
+            <cat.icon size={16} className="md:w-[18px] md:h-[18px]" />
+            <span className="text-sm md:text-base">{cat.id}</span>
           </button>
         ))}
       </div>

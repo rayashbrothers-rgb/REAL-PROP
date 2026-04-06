@@ -56,6 +56,68 @@ const SEED_PROJECTS: Partial<Project>[] = [
   }
 ];
 
+function ConfirmationModal({ 
+  isOpen, 
+  onClose, 
+  onConfirm, 
+  title, 
+  message, 
+  confirmText = "Confirm", 
+  type = 'danger' 
+}: { 
+  isOpen: boolean, 
+  onClose: () => void, 
+  onConfirm: () => void, 
+  title: string, 
+  message: string, 
+  confirmText?: string,
+  type?: 'danger' | 'success' | 'info'
+}) {
+  if (!isOpen) return null;
+
+  const colors = {
+    danger: { bg: 'bg-red-50', text: 'text-red-600', button: 'bg-red-600 hover:bg-red-700 shadow-red-200' },
+    success: { bg: 'bg-green-50', text: 'text-green-600', button: 'bg-green-600 hover:bg-green-700 shadow-green-200' },
+    info: { bg: 'bg-blue-50', text: 'text-blue-600', button: 'bg-blue-600 hover:bg-blue-700 shadow-blue-200' }
+  };
+
+  const color = colors[type];
+
+  return (
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+      <motion.div
+        initial={{ scale: 0.9, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.9, opacity: 0 }}
+        className="bg-white max-w-sm w-full p-8 rounded-3xl shadow-2xl text-center"
+      >
+        <div className={cn("w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6", color.bg, color.text)}>
+          {type === 'danger' ? <Trash2 size={32} /> : type === 'success' ? <CheckCircle2 size={32} /> : <Database size={32} />}
+        </div>
+        <h3 className="text-xl font-bold text-gray-900 mb-2">{title}</h3>
+        <p className="text-gray-500 mb-8">{message}</p>
+        <div className="flex gap-3">
+          <button
+            onClick={onClose}
+            className="flex-1 px-6 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold rounded-xl transition-all"
+          >
+            Cancel
+          </button>
+          <button
+            onClick={() => {
+              onConfirm();
+              onClose();
+            }}
+            className={cn("flex-1 px-6 py-3 text-white font-bold rounded-xl shadow-lg transition-all", color.button)}
+          >
+            {confirmText}
+          </button>
+        </div>
+      </motion.div>
+    </div>
+  );
+}
+
 export default function AdminDashboard({ user, isAdmin, onLogin, onLogout }: { user: User | null, isAdmin: boolean, onLogin: (success: boolean) => void, onLogout: () => void }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -264,6 +326,20 @@ function DashboardStats() {
   const [stats, setStats] = useState({ projects: 0, leads: 0 });
   const [isSeeding, setIsSeeding] = useState(false);
   const [isRegenerating, setIsRegenerating] = useState(false);
+  const [modalConfig, setModalConfig] = useState<{
+    isOpen: boolean;
+    title: string;
+    message: string;
+    onConfirm: () => void;
+    type: 'danger' | 'success' | 'info';
+    confirmText?: string;
+  }>({
+    isOpen: false,
+    title: '',
+    message: '',
+    onConfirm: () => {},
+    type: 'info'
+  });
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -278,7 +354,6 @@ function DashboardStats() {
   }, []);
 
   const handleSeedData = async () => {
-    if (!window.confirm('This will add sample projects to your database. Continue?')) return;
     setIsSeeding(true);
     try {
       for (const project of SEED_PROJECTS) {
@@ -287,8 +362,14 @@ function DashboardStats() {
           createdAt: serverTimestamp()
         });
       }
-      alert('Sample projects added successfully!');
-      window.location.reload();
+      setModalConfig({
+        isOpen: true,
+        title: 'Success!',
+        message: 'Sample projects added successfully!',
+        onConfirm: () => window.location.reload(),
+        type: 'success',
+        confirmText: 'Reload Page'
+      });
     } catch (error) {
       handleFirestoreError(error, OperationType.CREATE, 'projects');
     } finally {
@@ -297,23 +378,44 @@ function DashboardStats() {
   };
 
   const handleRegenerateHero = () => {
-    if (!window.confirm('This will clear the cached hero image and force a new generation. Continue?')) return;
     setIsRegenerating(true);
     localStorage.removeItem('hero_bg_image');
     setTimeout(() => {
       setIsRegenerating(false);
-      alert('Cache cleared! The hero image will regenerate on the next homepage visit.');
-      window.location.href = '/';
+      setModalConfig({
+        isOpen: true,
+        title: 'Cache Cleared!',
+        message: 'The hero image will regenerate on the next homepage visit.',
+        onConfirm: () => window.location.href = '/',
+        type: 'success',
+        confirmText: 'Go to Home'
+      });
     }, 1000);
   };
 
   return (
     <div className="space-y-8">
+      <ConfirmationModal 
+        isOpen={modalConfig.isOpen}
+        onClose={() => setModalConfig({ ...modalConfig, isOpen: false })}
+        onConfirm={modalConfig.onConfirm}
+        title={modalConfig.title}
+        message={modalConfig.message}
+        type={modalConfig.type}
+        confirmText={modalConfig.confirmText}
+      />
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <h2 className="text-2xl lg:text-3xl font-bold text-gray-900">Dashboard Overview</h2>
         <div className="flex flex-wrap items-center gap-4 sm:gap-6">
           <button
-            onClick={handleRegenerateHero}
+            onClick={() => setModalConfig({
+              isOpen: true,
+              title: 'Regenerate Hero?',
+              message: 'This will clear the cached hero image and force a new generation. Continue?',
+              onConfirm: handleRegenerateHero,
+              type: 'info',
+              confirmText: 'Yes, Clear Cache'
+            })}
             disabled={isRegenerating}
             className="flex items-center space-x-2 text-xs sm:text-sm font-bold text-gray-500 hover:text-red-600 transition-colors disabled:opacity-50"
           >
@@ -321,7 +423,14 @@ function DashboardStats() {
             <span>Regenerate Hero</span>
           </button>
           <button
-            onClick={handleSeedData}
+            onClick={() => setModalConfig({
+              isOpen: true,
+              title: 'Seed Sample Data?',
+              message: 'This will add sample projects to your database. Continue?',
+              onConfirm: handleSeedData,
+              type: 'info',
+              confirmText: 'Yes, Seed Data'
+            })}
             disabled={isSeeding}
             className="flex items-center space-x-2 text-xs sm:text-sm font-bold text-gray-500 hover:text-red-600 transition-colors disabled:opacity-50"
           >

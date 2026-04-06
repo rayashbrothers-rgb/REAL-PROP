@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, LayoutDashboard, ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
@@ -36,14 +36,20 @@ export default function Navbar({ isAdmin }: { isAdmin: boolean }) {
     { name: 'Delhi', href: '/delhi' },
   ];
 
-  const handleLinkClick = (href: string) => {
+  const handleLinkClick = (href: string, e: React.MouseEvent) => {
     setIsOpen(false);
     setShowLocations(false);
+    
     if (href.startsWith('/#')) {
       const id = href.substring(2);
       const element = document.getElementById(id);
+      
       if (element) {
+        e.preventDefault();
         element.scrollIntoView({ behavior: 'smooth' });
+      } else if (location.pathname !== '/') {
+        // If not on home page, let the default link behavior take over (navigate to /#id)
+        // The browser will handle the hash jump on the new page
       }
     }
   };
@@ -71,12 +77,7 @@ export default function Navbar({ isAdmin }: { isAdmin: boolean }) {
             <a
               key={link.name}
               href={link.href}
-              onClick={(e) => {
-                if (link.href.startsWith('/#')) {
-                  e.preventDefault();
-                  handleLinkClick(link.href);
-                }
-              }}
+              onClick={(e) => handleLinkClick(link.href, e)}
               className={cn(
                 'text-sm font-medium hover:text-red-600 transition-colors',
                 scrolled ? 'text-gray-700' : 'text-white'
@@ -141,14 +142,7 @@ export default function Navbar({ isAdmin }: { isAdmin: boolean }) {
               <a
                 key={link.name}
                 href={link.href}
-                onClick={(e) => {
-                  if (link.href.startsWith('/#')) {
-                    e.preventDefault();
-                    handleLinkClick(link.href);
-                  } else {
-                    setIsOpen(false);
-                  }
-                }}
+                onClick={(e) => handleLinkClick(link.href, e)}
                 className="text-lg font-medium text-gray-700 hover:text-red-600"
               >
                 {link.name}
