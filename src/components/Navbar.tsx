@@ -111,6 +111,7 @@ export default function Navbar({ isAdmin }: { isAdmin: boolean }) {
             </div>
           </div>
 
+        {isAdmin && (
           <Link
             to="/admin"
             className="flex items-center space-x-1 text-sm font-medium text-red-600 hover:text-red-700"
@@ -118,6 +119,7 @@ export default function Navbar({ isAdmin }: { isAdmin: boolean }) {
             <LayoutDashboard size={16} />
             <span>Admin</span>
           </Link>
+        )}
         </div>
 
         {/* Mobile Toggle */}

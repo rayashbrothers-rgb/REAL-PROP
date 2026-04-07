@@ -325,7 +325,6 @@ export default function AdminDashboard({ user, isAdmin, onLogin, onLogout }: { u
 function DashboardStats() {
   const [stats, setStats] = useState({ projects: 0, leads: 0 });
   const [isSeeding, setIsSeeding] = useState(false);
-  const [isRegenerating, setIsRegenerating] = useState(false);
   const [modalConfig, setModalConfig] = useState<{
     isOpen: boolean;
     title: string;
@@ -377,22 +376,6 @@ function DashboardStats() {
     }
   };
 
-  const handleRegenerateHero = () => {
-    setIsRegenerating(true);
-    localStorage.removeItem('hero_bg_image');
-    setTimeout(() => {
-      setIsRegenerating(false);
-      setModalConfig({
-        isOpen: true,
-        title: 'Cache Cleared!',
-        message: 'The hero image will regenerate on the next homepage visit.',
-        onConfirm: () => window.location.href = '/',
-        type: 'success',
-        confirmText: 'Go to Home'
-      });
-    }, 1000);
-  };
-
   return (
     <div className="space-y-8">
       <ConfirmationModal 
@@ -407,21 +390,6 @@ function DashboardStats() {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <h2 className="text-2xl lg:text-3xl font-bold text-gray-900">Dashboard Overview</h2>
         <div className="flex flex-wrap items-center gap-4 sm:gap-6">
-          <button
-            onClick={() => setModalConfig({
-              isOpen: true,
-              title: 'Regenerate Hero?',
-              message: 'This will clear the cached hero image and force a new generation. Continue?',
-              onConfirm: handleRegenerateHero,
-              type: 'info',
-              confirmText: 'Yes, Clear Cache'
-            })}
-            disabled={isRegenerating}
-            className="flex items-center space-x-2 text-xs sm:text-sm font-bold text-gray-500 hover:text-red-600 transition-colors disabled:opacity-50"
-          >
-            {isRegenerating ? <Loader2 size={14} className="animate-spin" /> : <ImageIcon size={14} />}
-            <span>Regenerate Hero</span>
-          </button>
           <button
             onClick={() => setModalConfig({
               isOpen: true,
@@ -846,7 +814,7 @@ function LeadManagement() {
                 {lead.budget}
               </span>}
             </div>
-            <p className="text-[10px] text-gray-400">Received: {lead.createdAt?.toDate().toLocaleDateString()}</p>
+            <p className="text-[10px] text-gray-400">Received: {lead.createdAt?.toDate ? lead.createdAt.toDate().toLocaleDateString() : 'N/A'}</p>
           </div>
         ))}
       </div>
@@ -892,7 +860,7 @@ function LeadManagement() {
                 </td>
                 <td className="px-6 py-4">
                   <p className="text-xs text-gray-500">
-                    {lead.createdAt?.toDate().toLocaleDateString()}
+                    {lead.createdAt?.toDate ? lead.createdAt.toDate().toLocaleDateString() : 'N/A'}
                   </p>
                 </td>
                 <td className="px-6 py-4 text-right">
