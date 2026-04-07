@@ -88,7 +88,7 @@ export default function LocationLayout({ location, title, description, keywords 
                     <ShieldCheck size={24} />
                   </div>
                   <div>
-                    <h4 className="font-bold text-xl mb-2">Trusted Real Estate Consultant</h4>
+                    <h4 className="font-bold text-xl mb-2">Trusted Property Investment Consultant</h4>
                     <p className="text-gray-600">REAL PROP is your dedicated property investment consultant in {location}, ensuring transparent and secure deals.</p>
                   </div>
                 </div>

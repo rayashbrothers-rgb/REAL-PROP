@@ -5,12 +5,11 @@ export default function NoidaExtension() {
     <LocationLayout 
       location="Noida Extension"
       title="Commercial Property in Noida Extension"
-      description="REAL PROP Noida Extension: Your trusted real estate consultant for commercial property investment in Noida Extension. Buy property and office space for sale with high rental yields."
+      description="REAL PROP Noida Extension: Your trusted property investment consultant for commercial property investment in Noida Extension. Buy property and office space for sale with high rental yields."
       keywords={[
         "Commercial property in Noida Extension",
         "Commercial property investment Noida Extension",
         "Commercial property for sale Noida Extension",
-        "Real estate consultant Noida Extension",
         "Property investment consultant Noida Extension",
         "REAL PROP Noida Extension"
       ]}

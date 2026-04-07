@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Phone, MessageCircle, ChevronRight, CheckCircle2, Loader2, Store, Briefcase, Building2, Home, Check } from 'lucide-react';
+import { Phone, MessageCircle, ChevronRight, CheckCircle2, Loader2, Store, Briefcase, Building2, Home, Check, Utensils } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { db, handleFirestoreError, OperationType } from '../firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
@@ -108,12 +108,13 @@ export default function Hero() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.8 }}
-              className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4"
+              className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 pt-4"
             >
               {[
                 { label: "Retail Shops", icon: Store },
                 { label: "Office Space", icon: Briefcase },
                 { label: "Studio Units", icon: Building2 },
+                { label: "Food Court", icon: Utensils },
                 { label: "Residential Flats", icon: Home }
               ].map((item, i) => (
                 <div key={i} className="bg-black/40 backdrop-blur-sm border border-white/20 p-4 rounded-xl text-center group hover:border-[#FFD700] transition-colors">
@@ -180,13 +181,13 @@ export default function Hero() {
           </div>
 
           {/* RIGHT SIDE: LOGO & CONTACT */}
-          <div className="lg:col-span-5 flex flex-col items-center lg:items-end justify-between h-full py-8">
+          <div className="lg:col-span-5 flex flex-col items-center lg:items-end justify-center space-y-8 py-8">
             {/* Circular Logo */}
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 1, delay: 0.5 }}
-              className="w-48 h-48 md:w-64 md:h-64 bg-white rounded-full p-4 shadow-2xl border-4 border-[#FFD700] flex items-center justify-center overflow-hidden"
+              className="w-48 h-48 md:w-56 md:h-56 bg-white rounded-full p-4 shadow-2xl border-4 border-[#FFD700] flex items-center justify-center overflow-hidden"
             >
               <img 
                 src="https://instasize.com/api/image/87e2fdb8828fd9cdfa4566774e9ba73c587ea743872310c777de048c2b9dd4b1.jpeg" 
@@ -201,18 +202,20 @@ export default function Hero() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 1 }}
-              className="text-center lg:text-right space-y-2 mt-12 lg:mt-0"
+              className="text-center lg:text-right space-y-3"
             >
-              <div className="flex items-center justify-center lg:justify-end space-x-4">
-                <div className="bg-[#25D366] p-3 rounded-full text-white shadow-lg">
-                  <Phone size={32} fill="currentColor" />
+              <div className="flex flex-col items-center lg:items-end space-y-2">
+                <div className="flex items-center space-x-4">
+                  <div className="bg-[#f97316] p-3 rounded-full text-white shadow-lg">
+                    <Phone size={32} fill="currentColor" />
+                  </div>
+                  <div className="text-[#f97316]">
+                    <p className="text-4xl md:text-6xl font-black tracking-tighter drop-shadow-sm">99998 2898</p>
+                  </div>
                 </div>
-                <div className="text-white">
-                  <p className="text-4xl md:text-6xl font-black tracking-tighter">99998 2898</p>
+                <div className="text-white/90 font-bold text-sm md:text-base tracking-widest uppercase bg-black/20 px-4 py-1 rounded-full backdrop-blur-sm">
+                  LALIT KUMAR <span className="text-[#FFD700] mx-2">|</span> PROPERTY INVESTMENT CONSULTANT
                 </div>
-              </div>
-              <div className="text-white/80 font-bold text-sm md:text-base tracking-widest uppercase">
-                LALIT KUMAR <span className="text-[#FFD700] mx-2">|</span> REAL ESTATE CONSULTANT
               </div>
             </motion.div>
           </div>

@@ -12,14 +12,14 @@ const locationData: Record<string, {
 }> = {
   'greater-noida': {
     title: 'Real Estate in Greater Noida',
-    description: 'Find premium commercial and residential properties in Greater Noida. REAL PROP is your trusted real estate consultant for the best investment deals in Greater Noida.',
+    description: 'Find premium commercial and residential properties in Greater Noida. REAL PROP is your trusted property investment consultant for the best investment deals in Greater Noida.',
     keywords: ['Commercial property in Greater Noida', 'Residential property in Greater Noida', 'REAL PROP Greater Noida'],
     highlights: ['Upcoming Jewar Airport connectivity', 'Planned infrastructure', 'High ROI potential']
   },
   'noida': {
     title: 'Real Estate in Noida',
     description: 'Explore the best commercial property investment in Noida. As a leading property investment consultant in Noida, we offer exclusive deals on office spaces and luxury flats.',
-    keywords: ['Commercial property in Noida', 'Office space for sale in Noida', 'Real estate consultant Noida'],
+    keywords: ['Commercial property in Noida', 'Office space for sale in Noida', 'Property investment consultant Noida'],
     highlights: ['Established IT hubs', 'Excellent metro connectivity', 'Premium lifestyle']
   },
   'noida-extension': {
@@ -31,13 +31,13 @@ const locationData: Record<string, {
   'ghaziabad': {
     title: 'Real Estate in Ghaziabad',
     description: 'Invest in the heart of NCR. Ghaziabad offers excellent commercial property for sale and residential options. Consult REAL PROP for the best property investment in Ghaziabad.',
-    keywords: ['Commercial property in Ghaziabad', 'Residential property in Ghaziabad', 'Real estate consultant Ghaziabad'],
+    keywords: ['Commercial property in Ghaziabad', 'Residential property in Ghaziabad', 'Property investment consultant Ghaziabad'],
     highlights: ['Excellent road connectivity', 'Established residential areas', 'Growing commercial sector']
   },
   'delhi': {
     title: 'Real Estate in Delhi',
     description: 'Premium commercial property in Delhi NCR. From high-end office spaces to luxury residences, REAL PROP provides expert real estate consultancy in Delhi.',
-    keywords: ['Commercial property in Delhi', 'Luxury property in Delhi', 'Real estate consultant Delhi'],
+    keywords: ['Commercial property in Delhi', 'Luxury property in Delhi', 'Property investment consultant Delhi'],
     highlights: ['Capital city advantage', 'Premium business addresses', 'Unmatched connectivity']
   }
 };
@@ -145,7 +145,7 @@ export default function LocationPage() {
           <div className="prose prose-lg max-w-none text-gray-600">
             <h2 className="text-3xl font-bold text-gray-900 mb-8">Why Choose REAL PROP for {data.title}?</h2>
             <p>
-              As a premier <strong>real estate consultant in Delhi NCR</strong>, REAL PROP specializes in identifying high-growth opportunities. 
+              As a premier <strong>property investment consultant in Delhi NCR</strong>, REAL PROP specializes in identifying high-growth opportunities. 
               Whether you are looking for <strong>commercial property in {locationId?.replace('-', ' ')}</strong> or a luxury residence, 
               our team of experts provides end-to-end support.
             </p>

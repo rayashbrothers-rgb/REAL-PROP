@@ -15,7 +15,7 @@ export default function About() {
           <div className="relative z-10 rounded-2xl overflow-hidden shadow-2xl">
             <img
               src="https://instasize.com/api/image/5f2cbf5d91e3ce08f94780378c59e96ac4fd41256e0c1ee8172c86049b3539b5.jpeg"
-              alt="Real Estate Consultant Lalit Kumar"
+              alt="Property Investment Consultant Lalit Kumar"
               className="w-full h-[350px] md:h-[500px] object-cover"
               referrerPolicy="no-referrer"
             />
@@ -44,10 +44,10 @@ export default function About() {
         >
           <h2 className="text-4xl font-bold text-gray-900 mb-6 leading-tight">
             REAL PROP – <br />
-            <span className="text-red-600">Real Estate Consultant in Delhi NCR</span>
+            <span className="text-red-600">Property Investment Consultant in Delhi NCR</span>
           </h2>
           <p className="text-gray-600 text-lg mb-8 leading-relaxed">
-            Meet <span className="font-bold text-gray-900">Lalit Kumar</span>, your dedicated <span className="font-bold text-red-600">Real Estate Consultant</span> specializing in the dynamic <span className="font-bold text-gray-900">Delhi NCR</span> market. With years of experience in <span className="font-bold text-gray-900">Noida, Greater Noida, Ghaziabad, and Delhi</span>, we bring unmatched expertise to your property journey.
+            Meet <span className="font-bold text-gray-900">Lalit Kumar</span>, your dedicated <span className="font-bold text-red-600">Property Investment Consultant</span> specializing in the dynamic <span className="font-bold text-gray-900">Delhi NCR</span> market. With years of experience in <span className="font-bold text-gray-900">Noida, Greater Noida, Ghaziabad, and Delhi</span>, we bring unmatched expertise to your property journey.
           </p>
           <p className="text-gray-600 text-lg mb-10 leading-relaxed">
             At <span className="font-bold text-red-600">REAL PROP</span>, we focus on trust, transparency, and delivering the best deals for <span className="font-bold text-gray-900">commercial property investment in Delhi NCR</span>. Whether you're looking for a dream home, a strategic <span className="font-bold text-gray-900">office space for sale</span>, or high-yield investment opportunities, we provide expert guidance as your premier <span className="font-bold text-gray-900">property investment consultant</span>.

@@ -24,7 +24,7 @@ export default function Footer() {
               />
             </Link>
             <p className="text-gray-400 leading-relaxed">
-              Turning Dreams Into Reality. Your trusted real estate partner in Noida, Greater Noida, Ghaziabad & Delhi NCR.
+              Turning Dreams Into Reality. Your trusted property investment partner in Noida, Greater Noida, Ghaziabad & Delhi NCR.
             </p>
             <div className="flex space-x-4">
               <a 
@@ -117,7 +117,7 @@ export default function Footer() {
               </li>
               <li className="flex items-start space-x-4">
                 <Mail className="text-red-600 shrink-0" size={20} />
-                <span>realprop201301@gmail.com</span>
+                <span>info@realprop.online</span>
               </li>
             </ul>
           </div>
