@@ -206,11 +206,11 @@ export default function Hero() {
             >
               <div className="flex flex-col items-center lg:items-end space-y-2">
                 <div className="flex items-center space-x-4">
-                  <div className="bg-[#f97316] p-3 rounded-full text-white shadow-lg">
+                  <div className="bg-red-600 p-3 rounded-full text-white shadow-lg border-2 border-black">
                     <Phone size={32} fill="currentColor" />
                   </div>
-                  <div className="text-[#f97316]">
-                    <p className="text-4xl md:text-6xl font-black tracking-tighter drop-shadow-sm">99998 2898</p>
+                  <div className="text-red-600">
+                    <p className="text-4xl md:text-6xl font-black tracking-tighter [text-shadow:3px_3px_0_#000,-3px_-3px_0_#000,3px_-3px_0_#000,-3px_3px_0_#000,3px_0_0_#000,-3px_0_0_#000,0_3px_0_#000,0_-3px_0_#000]">99998 82898</p>
                   </div>
                 </div>
                 <div className="text-white/90 font-bold text-sm md:text-base tracking-widest uppercase bg-black/20 px-4 py-1 rounded-full backdrop-blur-sm">

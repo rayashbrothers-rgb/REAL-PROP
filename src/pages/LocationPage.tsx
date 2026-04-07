@@ -46,6 +46,14 @@ export default function LocationPage() {
   const { locationId } = useParams<{ locationId: string }>();
   const data = locationId ? locationData[locationId] : null;
 
+  const handleWhatsApp = () => {
+    window.open(`https://wa.me/919999882898`, '_blank');
+  };
+
+  const handleCall = () => {
+    window.location.href = 'tel:9999882898';
+  };
+
   if (!data) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -85,11 +93,11 @@ export default function LocationPage() {
               {data.description}
             </p>
             <div className="flex flex-wrap gap-4">
-              <button className="bg-red-600 hover:bg-red-700 text-white px-8 py-4 rounded-xl font-bold transition-all flex items-center space-x-2">
+              <button onClick={handleCall} className="bg-red-600 hover:bg-red-700 text-white px-8 py-4 rounded-xl font-bold transition-all flex items-center space-x-2">
                 <Phone size={20} />
                 <span>Call Expert</span>
               </button>
-              <button className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-xl font-bold transition-all flex items-center space-x-2">
+              <button onClick={handleWhatsApp} className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-xl font-bold transition-all flex items-center space-x-2">
                 <MessageCircle size={20} />
                 <span>WhatsApp Now</span>
               </button>

@@ -61,7 +61,7 @@ export default function Contact() {
               </div>
               <div>
                 <p className="text-sm text-gray-500 font-medium uppercase tracking-wider">Call Us</p>
-                <p className="text-xl font-bold text-gray-900">+91 9999882898</p>
+                <p className="text-xl font-bold text-gray-900">+91 99998 82898</p>
               </div>
             </div>
 
@@ -71,7 +71,7 @@ export default function Contact() {
               </div>
               <div>
                 <p className="text-sm text-gray-500 font-medium uppercase tracking-wider">WhatsApp</p>
-                <p className="text-xl font-bold text-gray-900">+91 9999882898</p>
+                <p className="text-xl font-bold text-gray-900">+91 99998 82898</p>
               </div>
             </div>
 
